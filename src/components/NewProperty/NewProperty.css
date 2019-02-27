@@ -1,0 +1,39 @@
+/*
+#new-property-save-btn {
+	text-transform: uppercase;
+	background-color: #155671;
+	border: 1px solid #155671;
+	width: 200px;
+}
+
+#new-property-save-btn:hover {
+	background-color: white;
+	border: 1px solid #006666;
+	color: black;
+}
+
+.new-property-left {
+	float: left;
+	margin-bottom: 150px;
+	margin-left: 100px;
+}
+
+.new-property-input-container {
+	margin-bottom: 30px;
+}
+*/
+
+#new-property-save-message-success {
+	display: block;
+	/* margin-left: 10px;
+	margin-top: 10px; */
+	display: none;
+	color: #8CB095;
+}
+
+#new-property-save-message-failure {
+	display: block;
+	/* margin-left: 10px;
+	margin-top: 10px; */
+	display: none;
+}

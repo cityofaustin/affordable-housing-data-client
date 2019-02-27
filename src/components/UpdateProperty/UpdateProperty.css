@@ -1,0 +1,70 @@
+
+.header {
+	width: 100%;
+	height: 70px;
+	background-color: #337ab7;
+	text-align: center;
+	font-weight: 200;
+	letter-spacing: 20;
+}
+
+.header-title {
+	font-size: 45px;
+	color: white;
+	text-transform: uppercase;
+}
+
+.btn-custom {
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 200;
+	letter-spacing: 5;
+}
+
+.property-groups-container {
+	margin-left: 100px;
+}
+
+.save-btn {
+	width: 200px;
+	background-color: #155671;
+	color: white;
+	border-color: #155671;
+}
+
+.save-btn:hover {
+	background-color: #8CB095;
+	color: white;
+	border-color: #8CB095;
+}
+
+.save-btn-container {
+	margin-left: 90px;
+}
+
+.update-property-left {
+	float: left;
+	margin-bottom: 150px;
+}
+
+.update-property-right {
+	float: right;
+}
+
+
+#save-message-success {
+	display: block;
+	margin-left: 10px;
+	margin-top: 10px;
+	display: none;
+	color: #8CB095;
+}
+
+#save-message-failure {
+	display: block;
+	margin-left: 10px;
+	margin-top: 10px;
+	display: none;
+}
+
+
