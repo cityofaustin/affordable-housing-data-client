@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom';
 //import _ from "underscore";
 // axios
 import axios from 'axios';
+import API from '../ExpressAPIEndpoint';
 // components
 //import {TopNav} from '../TopNav/TopNav.jsx';
 // css
@@ -92,8 +93,10 @@ class NewProperty extends Component {
 
 		if (isValid){
 			this.hideFailureMessage();
+			//todo: add endpoint
 			var queryString = `/new_property?userEmail=${localStorage.getItem('email')}`;
-			axios.post(
+			//axios.post(
+			API.post(
 				queryString, {
 					'property_name': document.getElementById('new-property-name').value,
 					'street_address': document.getElementById('new-property-address').value,

@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 // axios
 import axios from 'axios';
+import API from '../ExpressAPIEndpoint';
 // dev files
 //import './UpdateProperties.css';
 
@@ -22,8 +23,11 @@ class UpdateProperties extends Component {
 		}
 
 		var email = localStorage.getItem('email');
+		
+		//todo: add endpoint
 		var queryString = '/update_properties_list?userEmail=' + email;
-		axios.get(queryString)
+		//axios.get(queryString)
+		API.get(queryString)
 			.then((res) => {
 				// console.log(res);
 				this.setState({data: res.data.data, showUpdateProperties: true});

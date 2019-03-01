@@ -1,7 +1,9 @@
 import axios from 'axios'
+import API from './ExpressAPIEndpoint';
 
 export const register = newUser => {
-    return axios
+    //return axios
+    return API
         .post('/users/register', {
             first_name: newUser.first_name,
             last_name: newUser.last_name,
@@ -14,7 +16,8 @@ export const register = newUser => {
 }
 
 export const login = user => {
-    return axios
+    //return axios
+    API
         .post('/users/login', {
             email: user.email,
             passwd: user.passwd

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 // axios
 import axios from 'axios';
+import API from '../ExpressAPIEndpoint';
 // components
 //import {UpdatePropertyInput} from '../UpdatePropertyInput/UpdatePropertyInput.jsx';
 //import {TopNav} from '../TopNav/TopNav.jsx';
@@ -47,8 +48,11 @@ class UpdateProperty extends Component {
 		console.log('property id ' + propertyId)
 
 		//var queryString = `/property?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
+		//todo: add endpoint IP variable for linking to express api server
 		var queryString = `/property/${propertyId}?userEmail=${localStorage.getItem('email')}`;
-		axios.get(queryString)
+		
+		//axios.get(queryString)
+		API.get(queryString)
 			.then((res) => {
 				console.log('what is res');
 				console.log(res);
@@ -196,7 +200,9 @@ class UpdateProperty extends Component {
 		this.hideSaveMessage();
 		this.hideFailureMessage();
 		var propertyId = this.props.match.params.id;
-		axios.post(
+		//todo: add endpoint 
+		//axios.post(
+		API.post(
 			`/update_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				updatedData: this.state.updatedData,

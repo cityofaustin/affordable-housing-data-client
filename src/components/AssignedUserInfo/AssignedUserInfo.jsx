@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 // axios
 import axios from 'axios';
+import API from '../ExpressAPIEndpoint';
 // css
 import './AssignedUserInfo.css';
 
@@ -17,9 +18,12 @@ class AssignedUserInfo extends Component {
 	}
 
 	getAssignedUser() {
+
+		//todo: add endpoint
 		var propertyId = this.props.propertyId;
 		var queryString = `/get_assigned_user?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
-		axios.get(queryString)
+		//axios.get(queryString)
+		API.get(queryString)
 			.then((res) => {
 				var assignedTo = null;
 				if (res.data.data.length > 0) {
@@ -43,9 +47,11 @@ class AssignedUserInfo extends Component {
 	}
 
 	handleUnassignUser() {
+		//todo: add endpoint
 		var propertyId = this.props.propertyId;
 		var queryString = `/unassign_user?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
-		axios.get(queryString)
+		//axios.get(queryString)
+		API.get(queryString)
 			.then((res) => {
 				this.setState({'assignedTo': null, 'showAssignedUserInfo': true});
 			})
@@ -58,8 +64,10 @@ class AssignedUserInfo extends Component {
 
 	handleAssignToMe() {
 		var propertyId = this.props.propertyId;
+		//todo: add endpoint
 		var queryString = `/assign_property_to_user?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
-		axios.get(queryString)
+		//axios.get(queryString)
+		API.get(queryString)
 			.then((res) => {
 				this.setState({'assignedTo': res.data.assignedTo, 'showAssignedUserInfo': true});
 			})

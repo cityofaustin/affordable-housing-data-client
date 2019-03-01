@@ -16,7 +16,7 @@ import {NewProperty} from './components/NewProperty/NewProperty.jsx';
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router basename={window.location.pathname}>
           <div className="App">
             <TopNav />
 

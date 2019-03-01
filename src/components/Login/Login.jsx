@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 // axios
 import axios from 'axios';
+import API from '../ExpressAPIEndpoint';
 // dev files
 import { debugLog } from '../utilities';
 // css
@@ -30,7 +31,9 @@ class Login extends Component {
 			pass: document.getElementById('email_pass').value
 		};
 
-		axios.post(
+		//todo: add endpoint 
+		//axios.post(
+		API.post(
 			'/login',
 			postData
 		).then((res) => {
