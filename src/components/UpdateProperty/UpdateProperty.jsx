@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 // axios
 import axios from 'axios';
-import API from '../ExpressAPIEndpoint';
+// import API from '../Api';
 // components
-//import {UpdatePropertyInput} from '../UpdatePropertyInput/UpdatePropertyInput.jsx';
-//import {TopNav} from '../TopNav/TopNav.jsx';
+// import {UpdatePropertyInput} from '../UpdatePropertyInput/UpdatePropertyInput.jsx';
+import {TopNav} from '../TopNav/TopNav.jsx';
 import {PropertyDataGroupView} from '../PropertyDataGroupView/PropertyDataGroupView.jsx';
 import {PropertyDataGroupEdit} from '../PropertyDataGroupEdit/PropertyDataGroupEdit.jsx';
 import {ContactInfo} from '../ContactInfo/ContactInfo.jsx';
@@ -43,47 +43,37 @@ class UpdateProperty extends Component {
 
 		this.handleUpdateData = this.handleUpdateData.bind(this);
 		this.updateVerifications = this.updateVerifications.bind(this);
-		
-		var propertyId = this.props.match.params.id;
-		console.log('property id ' + propertyId)
 
-		//var queryString = `/property?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
-		//todo: add endpoint IP variable for linking to express api server
-		var queryString = `/property/${propertyId}?userEmail=${localStorage.getItem('email')}`;
-		
-		//axios.get(queryString)
-		API.get(queryString)
+		var propertyId = this.props.match.params.id;
+		var queryString = `/property?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
+		axios.get(queryString)
 			.then((res) => {
-				console.log('what is res');
-				console.log(res);
+				//console.log('what is res');
+				//console.log(res);
 				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'showEditProperty': true, propertyId: propertyId, verifications: res.data.verifications});
 			})
 			.catch((e) => {
-				console.log('inside catch');
-				console.log(e);
-				console.log(e.response);
+				//console.log('inside catch');
+				//console.log(e);
+				//console.log(e.response);
 				if (e && e.response && !e.response.data.success && e.response.data.redirect) {
-					console.log('something-updateProperty');
 					this.setState({redirectTo: '/'});
+					//console.log('something');
 				}
 			});
 	}
 
 	handleUpdateData(data) {
-
 		if (!_.has(this.state.updatedData, data.field)) {
 			this.props.updatedData[data.field] = {};
-			//this.setState({})
 		}
 
 		// TODO: for strings, need to check if there it is an empty string, if it is, value should be null
 
 		if (typeof(data.value) === "string" && data.value.trim().length === 0) {
 			this.props.updatedData[data.field].value = null;
-			//this.setState({})
 		} else {
 			this.props.updatedData[data.field].value = data.value;
-			//this.setState({})
 		}
 	}
 
@@ -200,9 +190,7 @@ class UpdateProperty extends Component {
 		this.hideSaveMessage();
 		this.hideFailureMessage();
 		var propertyId = this.props.match.params.id;
-		//todo: add endpoint 
-		//axios.post(
-		API.post(
+		axios.post(
 			`/update_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				updatedData: this.state.updatedData,
@@ -218,6 +206,29 @@ class UpdateProperty extends Component {
 			});
 	}
 
+	handleDelete() {
+		this.hideSaveMessage();
+		this.hideFailureMessage();
+		var propertyId = this.props.match.params.id;
+		alert(propertyId);
+
+		axios.post(
+			`/delete_property?userEmail=${localStorage.getItem('email')}`,
+			{
+				propertyId: propertyId
+			})
+			.then((res) => {
+				//this.showSaveButton();
+				console.log('true');
+				this.showSaveMessage();
+			})
+			.catch((e) => {
+				console.log('error');
+				//this.showSaveButton();
+				this.showFailureMessage();
+			});
+	}
+
 	render() {
 		if (this.state.redirectTo) {
 			return (<Redirect to={this.state.redirectTo} />);
@@ -225,7 +236,7 @@ class UpdateProperty extends Component {
 		if (this.state.showUpdateProperty) {
 			return (
 				<div>
-					
+					<TopNav/>
 					<br/>
 					<div className='property-groups-container'>
 						<button onClick={() => {this.handleEditPropertyClick(true)}}>Edit Property</button>
@@ -238,7 +249,7 @@ class UpdateProperty extends Component {
 		if (this.state.showEditProperty) {
 			return (
 				<div>
-					
+					<TopNav/>
 					<br/>
 					<div className='update-property-left'>
 						<div className='property-groups-container'>
@@ -255,7 +266,8 @@ class UpdateProperty extends Component {
 							{this.renderGroups(true)}
 						</div>
 						<div className='save-btn-container'>
-							<button id='update-property-save-btn' onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
+							<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
+							<button id="update-property-delete-btn" onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>DELETE</button>
 							<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
 							<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
 						</div>

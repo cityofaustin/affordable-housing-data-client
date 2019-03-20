@@ -5,14 +5,12 @@ import {
 } from 'react-router-dom';
 // axios
 import axios from 'axios';
-import API from '../ExpressAPIEndpoint';
+// import API from '../Api';
 // dev files
-//import './UpdateProperties.css';
-
-
-//import {TopNav} from '../TopNav/TopNav.jsx';
+import './UpdateProperties.css';
+import {TopNav} from '../TopNav/TopNav.jsx';
 import { UpdatePropertiesTable } from '../UpdatePropertiesTable/UpdatePropertiesTable.jsx';
-//import { debugLog } from "../utilities";
+// import { debugLog } from '../utilities';
 
 class UpdateProperties extends Component {
 	constructor(props) {
@@ -23,13 +21,10 @@ class UpdateProperties extends Component {
 		}
 
 		var email = localStorage.getItem('email');
-		
-		//todo: add endpoint
 		var queryString = '/update_properties_list?userEmail=' + email;
-		//axios.get(queryString)
-		API.get(queryString)
+		axios.get(queryString)
 			.then((res) => {
-				// console.log(res);
+				console.log(res);
 				this.setState({data: res.data.data, showUpdateProperties: true});
 			})
 			.catch((e) => {
@@ -37,7 +32,7 @@ class UpdateProperties extends Component {
 				// if not authorized, we want to redirect to login page
 				if (e && e.response && !e.response.data.success && e.response.data.redirect) {
 					this.setState({redirectTo: '/'});
-					console.log('something');
+					//console.log('something');
 				}
 			});
 	}
@@ -49,7 +44,7 @@ class UpdateProperties extends Component {
 		if (this.state.showUpdateProperties) {
 			return (
 				<div>
-					
+					<TopNav/>
 					<UpdatePropertiesTable propertyData={this.state.data} />
 				</div>
 			);

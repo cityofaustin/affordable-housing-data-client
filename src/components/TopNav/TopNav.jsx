@@ -1,6 +1,8 @@
 // react libraries
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+import axios from 'axios';
+// import API from '../Api';
 // css
 import './TopNav.css';
 
@@ -19,49 +21,36 @@ class TopNav extends Component {
 	}
 
 	handleLogoutClick(e) {
-        localStorage.removeItem('usertoken')
-        localStorage.removeItem('isLoggedIn')
-        localStorage.removeItem('email')
-		this.setState({
-			'redirectTo': '/'
-		});
-	}
+		// var email = localStorage.getItem('email');
+		// console.log(email)
 
-	logOut(e) {
-        e.preventDefault()
-        localStorage.removeItem('usertoken')
-        localStorage.removeItem('isLoggedIn')
-        localStorage.removeItem('email')
-		// this.props.history.push('/')
-		this.setState({
-			'redirectTo': '/'
-		})
-    }
+		axios
+			.post('/logout',{
+				email:localStorage.getItem('email')
+			})
+			.then((res) => {
+				// remove local storage 
+				localStorage.clear()
+				this.setState({
+					'redirectTo': '/'
+				});
+			})
+	}
 
 	render() {
 		if (this.state.redirectTo) {
 			return <Redirect to={ this.state.redirectTo } />;
 		}
 
-		const loginRegLink = (
-            <ul className='top-nav-links'>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/register">Register</Link></li>
-            </ul>
-		)
-		const userLink = (
-            <ul className='top-nav-links'>
-                <li><Link to="/update_properties">All Properties</Link></li>
-                <li><Link to="/" onClick={this.logOut.bind(this)} >Logout</Link></li>
-            </ul>
-        )
-
 		return (
 			<div className='top-nav'>
 				<div className='top-nav-header-container'>
 					<span className='top-nav-header'>Austin Affordable Housing Data Portal</span>
 				</div>
-				{localStorage.usertoken ? userLink : loginRegLink}
+				<ul className='top-nav-links'>
+					<li onClick={this.handleAllPropertiesClick.bind(this)}>All Properties</li>
+					<li onClick={this.handleLogoutClick.bind(this)}>Logout</li>
+				</ul>
 			</div>
 		);
 	}

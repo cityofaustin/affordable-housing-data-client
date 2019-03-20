@@ -1,4 +1,3 @@
-
 .header {
 	width: 100%;
 	height: 70px;
@@ -50,7 +49,6 @@
 .update-property-right {
 	float: right;
 }
-
 
 #save-message-success {
 	display: block;

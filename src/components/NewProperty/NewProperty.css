@@ -1,4 +1,3 @@
-/*
 #new-property-save-btn {
 	text-transform: uppercase;
 	background-color: #155671;
@@ -21,19 +20,18 @@
 .new-property-input-container {
 	margin-bottom: 30px;
 }
-*/
 
 #new-property-save-message-success {
 	display: block;
-	/* margin-left: 10px;
-	margin-top: 10px; */
+	margin-left: 10px;
+	margin-top: 10px;
 	display: none;
 	color: #8CB095;
 }
 
 #new-property-save-message-failure {
 	display: block;
-	/* margin-left: 10px;
-	margin-top: 10px; */
+	margin-left: 10px;
+	margin-top: 10px;
 	display: none;
 }

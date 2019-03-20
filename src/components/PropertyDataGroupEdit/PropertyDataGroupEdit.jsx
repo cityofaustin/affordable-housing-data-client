@@ -163,7 +163,7 @@ class PropertyDataGroupEdit extends Component {
 					elem2 = <span>{'by '}<b>{verifications[field].updateUserEmail}</b></span>
 				}
 			}
-			return <span>{elem1} {elem2}</span>
+			return <p>{elem1} {elem2}</p>
 		}
 
 		var getInput = (field, dataType, value, isEditable) => {

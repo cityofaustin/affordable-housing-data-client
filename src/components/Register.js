@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { register } from './UserFunctions';
 
+import { register } from './RegisterFunctions';
 import { toast } from 'react-toastify';
-
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
 
 const initalState = {
     first_name: '',
@@ -45,7 +43,6 @@ class Register extends Component {
 
         if (!this.state.first_name){
             firstnameError='Invalid First Name'
-            toast.error(firstnameError)
         }
         if (!this.state.last_name){
             lastnameError='Invalid Last Name'
@@ -56,6 +53,8 @@ class Register extends Component {
         if (!this.state.passwd){
             passwordError='Invalid Password'
         }
+
+        
         if (emailError || lastnameError || firstnameError || passwordError){
             this.setState({emailError, lastnameError, firstnameError, passwordError});
             return false;
@@ -72,7 +71,6 @@ class Register extends Component {
             //console.log(this.state)
             toast.success('User has been registered.')
 
-            
             const user = {
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
@@ -80,8 +78,6 @@ class Register extends Component {
                 org: this.state.org,
                 passwd: this.state.passwd
             }
-
-            
 
             register(user).then(res => {
                 this.props.history.push(`/`)
@@ -105,13 +101,13 @@ class Register extends Component {
                     <Form.Group controlId="formBasicFirstName">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control required name="first_name" type="text" placeholder="Enter first name" value={this.state.first_name} onChange={this.onChange} />
-                        <Form.Text>{this.state.firstnameError}</Form.Text>
+                        <Form.Text className="text-danger">{this.state.firstnameError}</Form.Text>
                     </Form.Group>
                     
                     <Form.Group controlId="formBasicLastName">
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control required name="last_name" type="text" placeholder="Enter last name" value={this.state.last_name} onChange={this.onChange} />
-                        <Form.Text>{this.state.lastnameError}</Form.Text>
+                        <Form.Text className="text-danger">{this.state.lastnameError}</Form.Text>
                     </Form.Group>
                     
                     <Form.Group controlId="formBasicOrganization">
@@ -125,13 +121,13 @@ class Register extends Component {
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
-                        <Form.Text>{this.state.emailError}</Form.Text>
+                        <Form.Text className="text-danger">{this.state.emailError}</Form.Text>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control required name="passwd" type="password" placeholder="Password" value={this.state.passwd} onChange={this.onChange} />
-                        <Form.Text>{this.state.passwordError}</Form.Text>
+                        <Form.Text className="text-danger">{this.state.passwordError}</Form.Text>
                     </Form.Group>
 
                     <Button type="submit" variant="primary">

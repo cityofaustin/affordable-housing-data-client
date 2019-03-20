@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Redirect} from 'react-router-dom';
-//import {isLoggedIn} from '../Login/Login.jsx';
+// import {isLoggedIn} from '../Login/Login.jsx';
 
 class PrivateRoute extends Component {
 	/* constructor(props) {
