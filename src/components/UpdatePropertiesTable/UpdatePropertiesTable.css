@@ -27,7 +27,7 @@
 
 #table-search-input {
 	margin-left: 20px;
-	width: 835;
+	width: 835px;
 	display: inline;
 }
 
@@ -51,7 +51,7 @@
 	margin-left: 20px;
 	margin-bottom: 4px;
 	display: inline;
-	width: 165;
+	width: 165px;
 }
 
 .table-flag {
@@ -85,4 +85,3 @@
 .affordability-info-flag {
 	margin-top: 5px;
 }
-

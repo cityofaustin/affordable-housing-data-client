@@ -155,8 +155,18 @@ class UpdateProperty extends Component {
 		return this.state.data.id;
 	}
 
+	getIsDuplicate() {
+		return this.state.data.is_duplicate;
+	}
+
 	hideSaveButton() {
 		var elem = document.getElementById('update-property-save-btn');
+		elem.style.display = 'none';
+		return;
+	}
+
+	hideDeleteButton() {
+		var elem = document.getElementById('update-property-delete-btn');
 		elem.style.display = 'none';
 		return;
 	}
@@ -206,24 +216,24 @@ class UpdateProperty extends Component {
 			});
 	}
 
-	handleDelete() {
+
+	handleDelete(item) {
 		this.hideSaveMessage();
 		this.hideFailureMessage();
-		var propertyId = this.props.match.params.id;
-		alert(propertyId);
-
+		const propertyId = item;
 		axios.post(
 			`/delete_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				propertyId: propertyId
 			})
 			.then((res) => {
-				//this.showSaveButton();
-				console.log('true');
+			this.hideSaveButton();
+			this.hideDeleteButton();
+			console.log('true');
 				this.showSaveMessage();
 			})
 			.catch((e) => {
-				console.log('error');
+				console.log(e);
 				//this.showSaveButton();
 				this.showFailureMessage();
 			});
@@ -246,7 +256,7 @@ class UpdateProperty extends Component {
 				</div>
 			);
 		}
-		if (this.state.showEditProperty) {
+		if (this.state.showEditProperty && !this.getIsDuplicate()) {
 			return (
 				<div>
 					<TopNav/>
@@ -267,7 +277,9 @@ class UpdateProperty extends Component {
 						</div>
 						<div className='save-btn-container'>
 							<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
-							<button id="update-property-delete-btn" onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>DELETE</button>
+							{ localStorage.getItem('email')==='test@test.com' &&
+								<button id='update-property-delete-btn' onClick={(e) => window.confirm("Are you sure you wish to delete Property " + this.getPropertyId() +"?") && this.handleDelete(this.getPropertyId())}   className='save-btn btn btn-success'>DELETE</button>
+							}
 							<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
 							<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
 						</div>
@@ -315,6 +327,13 @@ class UpdateProperty extends Component {
 					</div>
 				</div>
 			);
+		}
+		else {
+			return (
+			<div>
+				<TopNav/>
+				<br/>
+			</div>)
 		}
 		return <div></div>
 	}
