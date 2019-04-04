@@ -40,7 +40,6 @@ class UpdateProperty extends Component {
 				// updatedUnitInfo: {}
 			}
 		};
-
 		this.handleUpdateData = this.handleUpdateData.bind(this);
 		this.updateVerifications = this.updateVerifications.bind(this);
 
@@ -65,27 +64,26 @@ class UpdateProperty extends Component {
 
 	handleUpdateData(data) {
 		if (!_.has(this.state.updatedData, data.field)) {
-			this.props.updatedData[data.field] = {};
+			this.state.updatedData[data.field] = {};
 		}
 
 		// TODO: for strings, need to check if there it is an empty string, if it is, value should be null
 
 		if (typeof(data.value) === "string" && data.value.trim().length === 0) {
-			this.props.updatedData[data.field].value = null;
+			this.state.updatedData[data.field].value = null;
 		} else {
-			this.props.updatedData[data.field].value = data.value;
+			this.state.updatedData[data.field].value = data.value;
 		}
 	}
 
 	updateVerifications(field, verifyVal) {
-		if (!_.has(this.verifications, field)) {
-			this.props.verifications[field] = {}
+		if (!_.has(this.state.verifications, field)) {
+			this.state.verifications[field] = {}
 		}
-		this.props.verifications[field].verified = verifyVal;
+		this.state.verifications[field].verified = verifyVal;
 	}
 
 	renderGroups(propertyDataGroupEdit=false) {
-
 		function getGroupFields(groupName, fieldsMap) {
 			var newObj = {};
 			for (var field in fieldsMap) {
@@ -120,7 +118,7 @@ class UpdateProperty extends Component {
 
 			if (propertyDataGroupEdit) {
 				groups.push(
-					<PropertyDataGroupEdit key={groupName} name={groupName} data={groupFieldsMap} updatePropertyThis={this} handleUpdateData={this.handleUpdateData} updateVerifications={this.updateVerifications} verifications={this.state.verifications}/>
+					<PropertyDataGroupEdit key={groupName} name={groupName} data={groupFieldsMap} propertyValue={this.state.data}  updatePropertyThis={this} handleUpdateData={this.handleUpdateData} updateVerifications={this.updateVerifications} verifications={this.state.verifications}/>
 				);
 			} else {
 				groups.push(
@@ -155,8 +153,18 @@ class UpdateProperty extends Component {
 		return this.state.data.id;
 	}
 
+	getIsDuplicate() {
+		return this.state.data.is_duplicate;
+	}
+
 	hideSaveButton() {
 		var elem = document.getElementById('update-property-save-btn');
+		elem.style.display = 'none';
+		return;
+	}
+
+	hideDeleteButton() {
+		var elem = document.getElementById('update-property-delete-btn');
 		elem.style.display = 'none';
 		return;
 	}
@@ -189,12 +197,15 @@ class UpdateProperty extends Component {
 		this.hideSaveButton();
 		this.hideSaveMessage();
 		this.hideFailureMessage();
-		var propertyId = this.props.match.params.id;
+		//const propertyId = this.props.match.params.id;
+		//console.log(this.state.updatedData);
+		//console.log(this.state.verifications)
+		
 		axios.post(
 			`/update_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				updatedData: this.state.updatedData,
-				propertyId: propertyId
+				propertyId: this.props.match.params.id
 			})
 			.then((res) => {
 				this.showSaveButton();
@@ -206,24 +217,24 @@ class UpdateProperty extends Component {
 			});
 	}
 
-	handleDelete() {
+
+	handleDelete(item) {
 		this.hideSaveMessage();
 		this.hideFailureMessage();
-		var propertyId = this.props.match.params.id;
-		alert(propertyId);
-
+		const propertyId = item;
 		axios.post(
 			`/delete_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				propertyId: propertyId
 			})
 			.then((res) => {
-				//this.showSaveButton();
-				console.log('true');
+			this.hideSaveButton();
+			this.hideDeleteButton();
+			console.log('true');
 				this.showSaveMessage();
 			})
 			.catch((e) => {
-				console.log('error');
+				console.log(e);
 				//this.showSaveButton();
 				this.showFailureMessage();
 			});
@@ -246,7 +257,7 @@ class UpdateProperty extends Component {
 				</div>
 			);
 		}
-		if (this.state.showEditProperty) {
+		if (this.state.showEditProperty && !this.getIsDuplicate()) {
 			return (
 				<div>
 					<TopNav/>
@@ -267,7 +278,9 @@ class UpdateProperty extends Component {
 						</div>
 						<div className='save-btn-container'>
 							<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
-							<button id="update-property-delete-btn" onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>DELETE</button>
+							{ localStorage.getItem('email')==='test@test.com' &&
+								<button id='update-property-delete-btn' onClick={(e) => window.confirm("Are you sure you wish to delete Property " + this.getPropertyId() +"?") && this.handleDelete(this.getPropertyId())}   className='save-btn btn btn-success'>DELETE</button>
+							}
 							<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
 							<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
 						</div>
@@ -316,7 +329,14 @@ class UpdateProperty extends Component {
 				</div>
 			);
 		}
-		return <div></div>
+		else {
+			return (
+			<div>
+				<TopNav/>
+				<br/>
+			</div>)
+		}
+		//return <div></div>
 	}
 }
 

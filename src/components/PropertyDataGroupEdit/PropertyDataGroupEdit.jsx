@@ -3,23 +3,37 @@ import React, { Component } from 'react';
 // css
 import './PropertyDataGroupEdit.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 // components
 import {UnitInformation} from '../UnitInformation/UnitInformation.jsx';
 // libs
 import _ from 'underscore';
 import moment from 'moment';
+// DatePicker
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class PropertyDataGroupEdit extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			groupName: props.name,
 			data: props.data,
-			showGroup:  false
+			showGroup:  false,
+			propertyId: props.propertyId,
+			startDate: props.propertyValue.affordability_start,
+			ExpireDate: props.propertyValue.affordability_expiration
 		}
+		//console.log(this.state.startDate);
 		return;
 	}
+
+/*
+	focousOut(value) {
+		if(!moment(value).isValid()) {
+	 		this.setState({selectedValue: moment()});
+		}
+	}*/
 
 	handleInfoClick(field) {
 		var data = this.state.data;
@@ -44,6 +58,49 @@ class PropertyDataGroupEdit extends Component {
 		this.props.handleUpdateData(updateData);
 		this.props.data[field].value = e.target.value;
 
+		this.setVerifyFalse(field);
+	}
+	
+	handleStartDateChange(field,e) {
+		//console.log(e); //Tue Apr 02 2019 00:00:00 GMT-8500 (Central Daylight Time)
+	  function dateConvert(dateobj) {
+		var year = dateobj.getFullYear();
+		var month = ("0" + (dateobj.getMonth()+1)).slice(-2);
+		var date = ("0" + dateobj.getDate()).slice(-2);
+		var hours = "00:00:00";
+		var converted_date = year + "-" + month + "-" + date + " " + hours;
+		return converted_date;
+	}
+		const newDate = dateConvert(e);		
+		this.setState({
+			startDate: e
+		});
+		var updateData = {
+			field: field,
+			value: newDate
+		}
+		this.props.handleUpdateData(updateData);
+		this.setVerifyFalse(field);
+	}	
+
+	handleExpireDateChange(field,e) {
+	  function dateConvert(dateobj) {
+		var year = dateobj.getFullYear();
+		var month = ("0" + (dateobj.getMonth()+1)).slice(-2);
+		var date = ("0" + dateobj.getDate()).slice(-2);
+		var hours = "00:00:00";
+		var converted_date = year + "-" + month + "-" + date + " " + hours;
+		return converted_date;
+	}
+		const newDate = dateConvert(e);		
+		this.setState({
+			ExpireDate: e
+		});
+		var updateData = {
+			field: field,
+			value: newDate
+		}
+		this.props.handleUpdateData(updateData);
 		this.setVerifyFalse(field);
 	}
 
@@ -115,7 +172,6 @@ class PropertyDataGroupEdit extends Component {
 	renderGroupEdit() {
 		var data = this.state.data;
 		var group = [];
-
 		function isTypeText(dataType) {
 			if (dataType.match(/^varchar.*/)) {
 				return true;
@@ -134,6 +190,14 @@ class PropertyDataGroupEdit extends Component {
 
 		function isTypeBool(dataType) {
 			if (dataType.match(/^tinyint.*/)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function isTypeDate(dataType) {
+			if (dataType.match(/^datetime.*/)) {
 				return true;
 			} else {
 				return false;
@@ -202,6 +266,24 @@ class PropertyDataGroupEdit extends Component {
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 						</div>
+					</span>
+				);
+			}  else if (isTypeDate(dataType)) {
+				return (
+					<span className='form-group'>
+					{field === 'affordability_start' &&
+					<DatePicker  value={moment(this.state.startDate).format('YYYY-MM-DD')}  onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					}
+					{field === 'affordability_expiration' &&
+					<DatePicker  value={moment(this.state.ExpireDate).format('YYYY-MM-DD')}  onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					}
+					{ field !== 'id' &&
+						/* exclude verify button from id */
+						<span>
+							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
+							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
+						</span>
+					}
 					</span>
 				);
 			} else if (dataType.match(/.*enum.*/)) {
