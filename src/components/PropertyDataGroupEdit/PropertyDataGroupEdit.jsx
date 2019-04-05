@@ -272,10 +272,10 @@ class PropertyDataGroupEdit extends Component {
 				return (
 					<span className='form-group'>
 					{field === 'affordability_start' &&
-					<DatePicker  value={moment(this.state.startDate).format('YYYY-MM-DD')}  onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					<DatePicker  value={moment.utc(this.state.startDate).format('YYYY-MM-DD')}  onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
 					}
 					{field === 'affordability_expiration' &&
-					<DatePicker  value={moment(this.state.ExpireDate).format('YYYY-MM-DD')}  onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					<DatePicker  value={moment.utc(this.state.ExpireDate).format('YYYY-MM-DD')}  onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
 					}
 					{ field !== 'id' &&
 						/* exclude verify button from id */
