@@ -64,23 +64,29 @@ class UpdateProperty extends Component {
 
 	handleUpdateData(data) {
 		if (!_.has(this.state.updatedData, data.field)) {
-			this.state.updatedData[data.field] = {};
+			this.setState(Object.assign(this.state.updatedData,{[data.field]:{}}));
+			//this.state.updatedData[data.field] = {};
+			//console.log(this.state.updatedData);
 		}
 
 		// TODO: for strings, need to check if there it is an empty string, if it is, value should be null
 
 		if (typeof(data.value) === "string" && data.value.trim().length === 0) {
-			this.state.updatedData[data.field].value = null;
+			this.setState(Object.assign(this.state.updatedData,{[data.field]:{value:null}}));
+			//this.state.updatedData[data.field].value = null;
 		} else {
-			this.state.updatedData[data.field].value = data.value;
+			this.setState(Object.assign(this.state.updatedData,{[data.field]:{value:data.value}}));
+			//this.state.updatedData[data.field].value = data.value;
 		}
 	}
 
 	updateVerifications(field, verifyVal) {
 		if (!_.has(this.state.verifications, field)) {
-			this.state.verifications[field] = {}
+			this.setState(Object.assign(this.state.verifications,{[field]:{}}));
+			//this.state.verifications[field] = {}
 		}
-		this.state.verifications[field].verified = verifyVal;
+		//this.state.verifications[field].verified = verifyVal;
+		this.setState(Object.assign(this.state.verifications,{[field]:{verified:verifyVal}}));
 	}
 
 	renderGroups(propertyDataGroupEdit=false) {
@@ -154,7 +160,11 @@ class UpdateProperty extends Component {
 	}
 
 	getIsDuplicate() {
-		return this.state.data.is_duplicate;
+		if (this.state.data !== undefined) {
+			return this.state.data.is_duplicate;
+		} else { //in case property doesn't exist
+			return 1;
+		}
 	}
 
 	hideSaveButton() {
