@@ -63,6 +63,7 @@ class PropertyDataGroupEdit extends Component {
 	
 	handleStartDateChange(field,e) {
 		//console.log(e); //Tue Apr 02 2019 00:00:00 GMT-8500 (Central Daylight Time)
+		/*
 	  function dateConvert(dateobj) {
 		var year = dateobj.getFullYear();
 		var month = ("0" + (dateobj.getMonth()+1)).slice(-2);
@@ -71,7 +72,8 @@ class PropertyDataGroupEdit extends Component {
 		var converted_date = year + "-" + month + "-" + date + " " + hours;
 		return converted_date;
 	}
-		const newDate = dateConvert(e);		
+		const newDate = dateConvert(e);	*/
+		const newDate = (moment(e).isValid()) ? moment.utc(e).format('YYYY-MM-DD') : "";	
 		this.setState({
 			startDate: e
 		});
@@ -83,7 +85,7 @@ class PropertyDataGroupEdit extends Component {
 		this.setVerifyFalse(field);
 	}	
 
-	handleExpireDateChange(field,e) {
+	handleExpireDateChange(field,e) {/*
 	  function dateConvert(dateobj) {
 		var year = dateobj.getFullYear();
 		var month = ("0" + (dateobj.getMonth()+1)).slice(-2);
@@ -92,7 +94,8 @@ class PropertyDataGroupEdit extends Component {
 		var converted_date = year + "-" + month + "-" + date + " " + hours;
 		return converted_date;
 	}
-		const newDate = dateConvert(e);		
+		const newDate = dateConvert(e);	*/
+		const newDate = (moment(e).isValid()) ? moment.utc(e).format('YYYY-MM-DD') : "";	
 		this.setState({
 			ExpireDate: e
 		});
@@ -269,13 +272,30 @@ class PropertyDataGroupEdit extends Component {
 					</span>
 				);
 			}  else if (isTypeDate(dataType)) {
+				//related dates
+				const today = new Date();
+				const sDate = new Date(this.state.startDate);
+				const eDate = new Date(this.state.ExpireDate);
+				//selected date value
+				const minDate = (moment(this.state.startDate).isValid()) ? sDate : today;	
+				const maxDate = (moment(this.state.ExpireDate).isValid()) ? eDate : today;	
 				return (
 					<span className='form-group'>
-					{field === 'affordability_start' &&
-					<DatePicker  value={moment.utc(this.state.startDate).format('YYYY-MM-DD')}  onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					{field === 'affordability_start' && 
+					<DatePicker value={moment(this.state.startDate).isValid() ? moment(this.state.startDate).format('YYYY-MM-DD') : ""} 
+					selected={minDate} 
+					onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
+					isClearable={true} 
+					showYearDropdown 
+					scrollableYearDropdown
+					yearDropdownItemNumber={15}/>
 					}
 					{field === 'affordability_expiration' &&
-					<DatePicker  value={moment.utc(this.state.ExpireDate).format('YYYY-MM-DD')}  onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" showYearDropdown/>
+					<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} selected={maxDate} minDate={minDate} 
+					onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
+					isClearable={true} 
+					showYearDropdown
+					yearDropdownItemNumber={15}/>
 					}
 					{ field !== 'id' &&
 						/* exclude verify button from id */

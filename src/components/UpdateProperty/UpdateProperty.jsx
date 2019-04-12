@@ -38,6 +38,8 @@ class UpdateProperty extends Component {
 				// see 'Unit Information' above, we are not going to collect real time unit information for now
 				// newUnitInfo: {},
 				// updatedUnitInfo: {}
+			},
+			verifications: {
 			}
 		};
 		this.handleUpdateData = this.handleUpdateData.bind(this);
@@ -49,7 +51,7 @@ class UpdateProperty extends Component {
 			.then((res) => {
 				//console.log('what is res');
 				//console.log(res);
-				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'showEditProperty': true, propertyId: propertyId, verifications: res.data.verifications});
+				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'showEditProperty': true, propertyId: propertyId});
 			})
 			.catch((e) => {
 				//console.log('inside catch');
