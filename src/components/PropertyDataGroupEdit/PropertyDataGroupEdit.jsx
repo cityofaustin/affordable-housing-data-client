@@ -73,7 +73,7 @@ class PropertyDataGroupEdit extends Component {
 		return converted_date;
 	}
 		const newDate = dateConvert(e);	*/
-		const newDate = (moment(e).isValid()) ? moment.utc(e).format('YYYY-MM-DD') : "";	
+		const newDate = (moment(e).isValid()) ? moment(e).format('YYYY-MM-DD') : "";	
 		this.setState({
 			startDate: e
 		});
@@ -95,7 +95,7 @@ class PropertyDataGroupEdit extends Component {
 		return converted_date;
 	}
 		const newDate = dateConvert(e);	*/
-		const newDate = (moment(e).isValid()) ? moment.utc(e).format('YYYY-MM-DD') : "";	
+		const newDate = (moment(e).isValid()) ? moment(e).format('YYYY-MM-DD') : "";	
 		this.setState({
 			ExpireDate: e
 		});
@@ -284,14 +284,17 @@ class PropertyDataGroupEdit extends Component {
 					{field === 'affordability_start' && 
 					<DatePicker value={moment(this.state.startDate).isValid() ? moment(this.state.startDate).format('YYYY-MM-DD') : ""} 
 					selected={minDate} 
-					onChange={this.handleStartDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
+					onChange={this.handleStartDateChange.bind(this,field)} 
+					dateFormat="yyyy-MM-dd" 
 					isClearable={true} 
 					showYearDropdown 
 					scrollableYearDropdown
 					yearDropdownItemNumber={15}/>
 					}
 					{field === 'affordability_expiration' &&
-					<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} selected={maxDate} minDate={minDate} 
+					<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} 
+					selected={maxDate} 
+					minDate={minDate} 
 					onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
 					isClearable={true} 
 					showYearDropdown
