@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-
-import { register } from './RegisterFunctions';
+import { register } from './RegistrationFunctions';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+// import Nav from 'react-bootstrap/Nav';
 
 const initalState = {
     first_name: '',
@@ -17,7 +17,7 @@ const initalState = {
     passwordError: '' 
 }
 
-class Register extends Component {
+class Registration extends Component {
     constructor(props) {
         super(props)
         this.state = initalState
@@ -94,8 +94,8 @@ class Register extends Component {
     render () {
         return (
             <div className="container">
-            
-                <h1>Register</h1>
+                
+                <h1>Registration</h1>
                 <Form noValidate onSubmit={this.onSubmit}>
                     
                     <Form.Group controlId="formBasicFirstName">
@@ -139,4 +139,4 @@ class Register extends Component {
     }
 }
 
-export default Register
+export default Registration
