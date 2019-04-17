@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, withRouter, Redirect } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -28,7 +28,7 @@ class NavBar extends Component {
                     <Link to="/" className="nav-link">Home</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/register" className="nav-link">Register</Link>
+                    <Link to="/registration" className="nav-link">Registration</Link>
                 </li>
             </ul>
         )
@@ -47,12 +47,12 @@ class NavBar extends Component {
 
         return (
 
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
                 <Navbar.Brand href="/">Austin Affordable Housing Data Portal</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        {localStorage.usertoken ? userLink : loginRegLink}
+                        {localStorage.email ? userLink : loginRegLink}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

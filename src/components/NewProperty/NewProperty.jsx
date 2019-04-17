@@ -7,7 +7,7 @@ import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 // import API from '../Api';
 // components
-import {TopNav} from '../TopNav/TopNav.jsx';
+// import {TopNav} from '../TopNav/TopNav.jsx';
 // css
 import '../UpdateProperty/UpdateProperty.css';
 import './NewProperty.css';
@@ -61,8 +61,6 @@ class NewProperty extends Component {
 
 		return (
 			<div>
-				<TopNav/>
-				<br/>
 				<div className='new-property-left'>
 					<div>After the new property has been created you will be redirected to a page where you can edit additional attributes.</div>
 					<br/>

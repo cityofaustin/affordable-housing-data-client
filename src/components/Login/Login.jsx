@@ -9,6 +9,7 @@ import { debugLog } from '../utilities';
 // css
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css'
+// import Nav from 'react-bootstrap/Nav';
 
 class Login extends Component {
 	constructor(props) {
@@ -72,31 +73,34 @@ class Login extends Component {
 		}
 
 		return(
-			<div id='login-container'>
-					<div id='login-img-container'>
-						<img src='/img/house.png' alt="house" />
-					</div>
-					<div id='login-title-container'>
-						<span id='affordable-housing-data-hub-title'>Austin Affordable Housing Data Portal</span>
-					</div>
-					<br/>
-					<div className='login-form-container'>
-						<div>
-							<form className='form-group'>
-								<span>Email</span>
-								<br/>
-								<input id='email_login' className='login_input form-control' autoComplete='on'></input>
-								<br/>
-								<span>Password</span>
-								<br/>
-								<input id='email_pass' className='login_input form-control' type='password' autoComplete='on'></input>
-								<br/>
-								<button className='btn btn-primary btn-login' onClick={this.handleLogin}>Login</button>
-							</form>
+			<div className="container">
+				<div id='login-container'>
+					
+						<div id='login-img-container'>
+							<img src='/img/house.png' alt="house" />
 						</div>
-						<div id='login_failed_msg'>Login failed. Username and password combination is incorrect.</div>
-						<div id='login_error_msg'>Login failed. Please contact system adminstrator for details.</div>
-					</div>
+						<div id='login-title-container'>
+							<span id='affordable-housing-data-hub-title'>Austin Affordable Housing Data Portal</span>
+						</div>
+						<br/>
+						<div className='login-form-container'>
+							<div>
+								<form className='form-group'>
+									<span>Email</span>
+									<br/>
+									<input id='email_login' className='login_input form-control' autoComplete='on'></input>
+									<br/>
+									<span>Password</span>
+									<br/>
+									<input id='email_pass' className='login_input form-control' type='password' autoComplete='on'></input>
+									<br/>
+									<button className='btn btn-primary btn-login' onClick={this.handleLogin}>Login</button>
+								</form>
+							</div>
+							<div id='login_failed_msg'>Login failed. Username and password combination is incorrect.</div>
+							<div id='login_error_msg'>Login failed. Please contact system adminstrator for details.</div>
+						</div>
+				</div>
 			</div>
 		)
 	}

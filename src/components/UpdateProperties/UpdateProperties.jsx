@@ -8,7 +8,7 @@ import axios from 'axios';
 // import API from '../Api';
 // dev files
 import './UpdateProperties.css';
-import {TopNav} from '../TopNav/TopNav.jsx';
+// import {TopNav} from '../TopNav/TopNav.jsx';
 import { UpdatePropertiesTable } from '../UpdatePropertiesTable/UpdatePropertiesTable.jsx';
 // import { debugLog } from '../utilities';
 
@@ -44,7 +44,7 @@ class UpdateProperties extends Component {
 		if (this.state.showUpdateProperties) {
 			return (
 				<div>
-					<TopNav/>
+					
 					<UpdatePropertiesTable propertyData={this.state.data} />
 				</div>
 			);

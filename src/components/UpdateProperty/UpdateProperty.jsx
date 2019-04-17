@@ -6,7 +6,7 @@ import axios from 'axios';
 // import API from '../Api';
 // components
 // import {UpdatePropertyInput} from '../UpdatePropertyInput/UpdatePropertyInput.jsx';
-import {TopNav} from '../TopNav/TopNav.jsx';
+// import {TopNav} from '../TopNav/TopNav.jsx';
 import {PropertyDataGroupView} from '../PropertyDataGroupView/PropertyDataGroupView.jsx';
 import {PropertyDataGroupEdit} from '../PropertyDataGroupEdit/PropertyDataGroupEdit.jsx';
 import {ContactInfo} from '../ContactInfo/ContactInfo.jsx';
@@ -260,7 +260,7 @@ class UpdateProperty extends Component {
 		if (this.state.showUpdateProperty) {
 			return (
 				<div>
-					<TopNav/>
+					
 					<br/>
 					<div className='property-groups-container'>
 						<button onClick={() => {this.handleEditPropertyClick(true)}}>Edit Property</button>
@@ -273,8 +273,7 @@ class UpdateProperty extends Component {
 		if (this.state.showEditProperty && !this.getIsDuplicate()) {
 			return (
 				<div>
-					<TopNav/>
-					<br/>
+					
 					<div className='update-property-left'>
 						<div className='property-groups-container'>
 						{
@@ -345,8 +344,7 @@ class UpdateProperty extends Component {
 		else {
 			return (
 			<div>
-				<TopNav/>
-				<br/>
+				
 			</div>)
 		}
 		//return <div></div>

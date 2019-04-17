@@ -2,11 +2,14 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 // libraries
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from "underscore";
 // css
-import './UpdatePropertiesTable.css';
+// import './UpdatePropertiesTable.css';
 
+import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
+// import Form from 'react-bootstrap/Form';
 
 class UpdatePropertiesTable extends Component {
 	constructor(props) {
@@ -42,14 +45,14 @@ class UpdatePropertiesTable extends Component {
 	renderFlags(p) {
 		var elem1, elem2;
 		if (p.basicPropertyInfoVerified) {
-			elem1 = <button className='table-flag btn btn-success table-flag-verified'>Basic Info Verified</button>;
+			elem1 = <Button variant="success" size="sm" className='table-flag table-flag-verified'>Basic Info Verified</Button>;
 		} else {
-			elem1 = <button className='table-flag btn btn-danger table-flag-unverified'>Basic Info Unverified</button>;
+			elem1 = <Button variant="danger" size="sm" className='table-flag table-flag-unverified'>Basic Info Unverified</Button>;
 		}
 		if (p.tenantCriteriaVerified) {
-			elem2 = <button className='table-flag btn btn-success table-flag-verified affordability-info-flag'>Tenant Criteria Verified</button>;
+			elem2 = <Button variant="success" size="sm" className='table-flag table-flag-verified affordability-info-flag'>Tenant Criteria Verified</Button>;
 		} else {
-			elem2 = <button className='table-flag btn btn-danger table-flag-unverified affordability-info-flag'>Tenant Criteria Unverified</button>;
+			elem2 = <Button variant="danger" size="sm" className='table-flag table-flag-unverified affordability-info-flag'>Tenant Criteria Unverified</Button>;
 		}
 		return <span>{elem1} {elem2}</span>;
 	}
@@ -76,10 +79,7 @@ class UpdatePropertiesTable extends Component {
 			rows.push(
 				<tr key={p.id}>
 					<td>{p.id}</td>
-					<td>{p.property_name}</td>
-					<td>{p.address}</td>
-					<td>{p.city}</td>
-					<td>{p.zipcode}</td>
+					<td>{p.property_name} <br /> {p.address} <br />{p.city}, TX {p.zipcode}</td>
 					<td>{p.total_income_restricted_units ? p.total_income_restricted_units : <span className='text-danger'>unknown</span>}</td>
 					<td>{p.phone}</td>
 					<td>{this.renderDataSources(p)}</td>
@@ -161,40 +161,44 @@ class UpdatePropertiesTable extends Component {
 		}
 
 		return (
-			<div>
-				<br/>
+			<div className="container-fluid">
 				<div className='form-group'>
-					<div style={{'marginLeft': '50px'}}>
-						<span><b>Basic Info Verified (complete / total):</b> {this.getTotalFieldCount('basicPropertyInfoVerified')} / {this.state.propertyData.length}</span>
-						<br/>
-						<span><b>Tenant Criteria Verified (complete / total):</b> {this.getTotalFieldCount('tenantCriteriaVerified')} / {this.state.propertyData.length}</span>
-					</div>
-					<br/>
-					<button
+					<Button variant="primary"
 						id='new-property-id'
-						className='btn btn-primary'
 						onClick={this.handleNewPropertyClick.bind(this)}
 						disabled={false}
-					>New Property</button>
-					<input onKeyUp={this.handleSearchKeyUp.bind(this)} className='form-control' type="text" id="table-search-input" placeholder="Search by address..." />
-					<select value={this.state.value} id='table-search-select' onChange={this.handleSearchSelectChange.bind(this)} className="custom-select">
-						<option>Address</option>
-						<option>Property ID</option>
-						<option>Property Name</option>
-						<option>Assigned To</option>
-						<option>Data Source</option>
-						<option>Funding Source</option>
-						<option>Flag</option>
-					</select>
+					>New Property</Button>
 				</div>
-				<table id='update-properties-table' className="table table-bordered">
+				<div>
+					<p>
+						<b>Basic Info Verified (complete / total):</b> {this.getTotalFieldCount('basicPropertyInfoVerified')} / {this.state.propertyData.length}
+						<br />
+						<b>Tenant Criteria Verified (complete / total):</b> {this.getTotalFieldCount('tenantCriteriaVerified')} / {this.state.propertyData.length}
+					</p>
+				</div>
+				<div className="form-row">
+						<div className="form-group col-md-8">
+							<input onKeyUp={this.handleSearchKeyUp.bind(this)} className='form-control' type="text" id="table-search-input" placeholder="Search by address..." />
+						</div>
+					
+						<div className="form-group col-md-4">
+							<select value={this.state.value} id='table-search-select' onChange={this.handleSearchSelectChange.bind(this)} className="form-control custom-select">
+								<option>Address</option>
+								<option>Property ID</option>
+								<option>Property Name</option>
+								<option>Assigned To</option>
+								<option>Data Source</option>
+								<option>Funding Source</option>
+								<option>Flag</option>
+							</select>
+						</div>
+				</div>
+				<br />
+				<Table id='update-properties-table' striped bordered hover size="sm">
 				 	<thead>
 						<tr>
 							<th scope="col">ID</th>
 							<th scope="col">Name</th>
-							<th scope="col">Address</th>
-							<th scope="col">City</th>
-							<th scope="col">Zip</th>
 							<th scope="col">Total Income Restricted Units</th>
 							<th scope="col">Contact</th>
 							<th scope="col">Data Source(s)</th>
@@ -207,7 +211,7 @@ class UpdatePropertiesTable extends Component {
 				  <tbody>
 				  	{this.renderRows()}
 				  </tbody>
-				</table>
+				</Table>
 			</div>
 		);
 	}
