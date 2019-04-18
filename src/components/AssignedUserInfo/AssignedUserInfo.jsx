@@ -4,7 +4,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import API from '../Api';
 // css
-import './AssignedUserInfo.css';
+// import './AssignedUserInfo.css';
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
 class AssignedUserInfo extends Component {
 	constructor(props) {
@@ -73,23 +76,33 @@ class AssignedUserInfo extends Component {
 
 	render() {
 		return (
+
+
+			
+
+
 			<div className='assigned-info-container'>
 			{ this.state.showAssignedUserInfo &&
-			<div className='assigned-info-content'>
-				<span className='assigned-info-title'>Assignee Info:</span>
-				<br/>
-				<span><b>Assigned To:</b> {this.renderAssignedTo()}</span>
-				<br/>
-				{ this.state.assignedTo &&
-				<span>
-					<button onClick={this.handleUnassignUser.bind(this)} className='btn assign-info-btn '>Unassign User</button>
-					<br/>
-				</span>
-				}
-				<span><button onClick={this.handleAssignToMe.bind(this)} className='btn assign-info-btn'>Assign To Me</button></span>
-			</div>
+				<Card bg="light">
+					<Card.Body>
+						<Card.Title>Assignee Info</Card.Title>
+						<Card.Text>
+							<p>
+								<b>Assigned To:</b> {this.renderAssignedTo()}
+							</p>
+							
+							<ButtonToolbar>
+								{ this.state.assignedTo &&
+									<Button variant="outline-secondary" size="sm" onClick={this.handleUnassignUser.bind(this)} className='assign-info-btn '>Unassign User</Button>
+								}
+								&nbsp; <Button variant="outline-secondary" size="sm" onClick={this.handleAssignToMe.bind(this)} className='assign-info-btn'>Assign To Me</Button>
+							</ButtonToolbar>
+						</Card.Text>
+					</Card.Body>
+				</Card>
 			}
 			</div>
+
 		);
 	}
 }

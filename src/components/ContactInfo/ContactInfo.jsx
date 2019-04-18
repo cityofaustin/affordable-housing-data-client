@@ -15,8 +15,8 @@ class ContactInfo extends Component {
 		return (
 			<div>
 				<Card bg="light">
-					<Card.Header>Contact Info</Card.Header>
 					<Card.Body>
+						<Card.Title>Contact Info</Card.Title>
 						<Card.Text>
 							<p>
 								<b>Property Manager:</b> {this.props.data.property_manager_or_landlord}
