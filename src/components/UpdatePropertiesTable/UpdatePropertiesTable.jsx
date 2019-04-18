@@ -98,7 +98,7 @@ class UpdatePropertiesTable extends Component {
 		var searchBy = this.state.searchBy;
 
 		var searchByMap = {
-			'Address': 2,
+			'Address': 1,
 			'Property ID': 0,
 			'Property Name': 1,
 			'Assigned To': 9,
