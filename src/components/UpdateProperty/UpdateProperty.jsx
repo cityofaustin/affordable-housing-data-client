@@ -279,7 +279,7 @@ class UpdateProperty extends Component {
 			return (
 				<Container fluid>
 					<Row>
-						<Col sm={8}>
+						<Col sm={9}>
 							<div className='property-groups-container'>
 							{
 								this.getPropertyId() &&
@@ -301,78 +301,64 @@ class UpdateProperty extends Component {
 								<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
 								<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
 							</div>
-							<br />
-							<Row>
-								<Col>
-									<Card bg="light">
-										<Card.Header>What data is 'Basic Info'?</Card.Header>
-										<Card.Body>
-											<Card.Text>
-												<ul>
-													<li>property name</li>
-													<li>street address</li>
-													<li>city</li>
-													<li>state</li>
-													<li>zip code</li>
-													<li>phone</li>
-													<li>website</li>
-													<li>unit type</li>
-													<li>council district</li>
-													<li>total units</li>
-													<li>total psh units</li>
-													<li>total income restricted units</li>
-													<li></li>
-													<li></li>
-												</ul>
-											</Card.Text>
-										</Card.Body>
-									</Card>
-								</Col>
-								<Col>
-									<Card bg="light">
-										<Card.Header>What data is 'Tenant Criteria'?</Card.Header>
-										<Card.Body>
-											<Card.Text>
-												<ul>
-													<li>accepts section 8</li>
-													<li>has available units</li>
-													<li>only serves students</li>
-													<li>only serves elderly</li>
-													<li>only serves physically disabled persons</li>
-													<li>only serves mentally disabled person</li>
-													<li>only serves veterans</li>
-													<li>only serves military</li>
-													<li>only serves domestic abuse survivors</li>
-													<li>other community served information</li>
-													<li>does this property accept applicants with history of broken leases (and other criteria)</li>
-													<li>does this property accept applicants with an eviction history (and other criteria)</li>
-													<li>does this property accept criminal history (and other criteria)</li>
-													<li>has waitlist</li>
-													<li>schools</li>
-												</ul>
-											</Card.Text>
-										</Card.Body>
-									</Card>
-								</Col>
-							</Row>
-							
-
-							
-						
 						</Col>
-						<Col sm={4}>
+						<Col sm={3}>
 						
 							<ContactInfo data={this.state.data} />
 							<br/>
 							<AssignedUserInfo propertyId={this.state.propertyId} />
 						</Col>
 					</Row>
+					<hr />
 					<Row>
-						<Col sm={6}>
-							
+						<Col>
+							<Card bg="light">
+								<Card.Header>What data is 'Basic Info'?</Card.Header>
+								<Card.Body>
+									<Card.Text>
+										<ul>
+											<li>property name</li>
+											<li>street address</li>
+											<li>city</li>
+											<li>state</li>
+											<li>zip code</li>
+											<li>phone</li>
+											<li>website</li>
+											<li>unit type</li>
+											<li>council district</li>
+											<li>total units</li>
+											<li>total psh units</li>
+											<li>total income restricted units</li>
+										</ul>
+									</Card.Text>
+								</Card.Body>
+							</Card>
 						</Col>
-						<Col sm={6}>
-						
+						<Col>
+							<Card bg="light">
+								<Card.Header>What data is 'Tenant Criteria'?</Card.Header>
+								<Card.Body>
+									<Card.Text>
+										<ul>
+											<li>accepts section 8</li>
+											<li>has available units</li>
+											<li>only serves students</li>
+											<li>only serves elderly</li>
+											<li>only serves physically disabled persons</li>
+											<li>only serves mentally disabled person</li>
+											<li>only serves veterans</li>
+											<li>only serves military</li>
+											<li>only serves domestic abuse survivors</li>
+											<li>other community served information</li>
+											<li>does this property accept applicants with history of broken leases (and other criteria)</li>
+											<li>does this property accept applicants with an eviction history (and other criteria)</li>
+											<li>does this property accept criminal history (and other criteria)</li>
+											<li>has waitlist</li>
+											<li>schools</li>
+										</ul>
+									</Card.Text>
+								</Card.Body>
+							</Card>
 						</Col>
 					</Row>
 				</Container>

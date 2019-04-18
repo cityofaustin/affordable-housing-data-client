@@ -1,7 +1,8 @@
 // react libs
 import React, { Component } from 'react';
 // css
-import './ContactInfo.css';
+// import './ContactInfo.css';
+import Card from 'react-bootstrap/Card'
 
 class ContactInfo extends Component {
 	constructor(props) {
@@ -12,19 +13,27 @@ class ContactInfo extends Component {
 
 	render() {
 		return (
-			<div className='contact-info-container'>
-				<div className='contact-info-content'>
-					<span className='contact-info-title'>Contact Info:</span>
-					<br/>
-					<span><b>Property Manager:</b> {this.props.data.property_manager_or_landlord}</span>
-					<br/>
-					<span><b>Phone:</b> {this.props.data.phone}</span>
-					<br/>
-					<span><b>Email:</b> {this.props.data.email}</span>
-					<br/>
-					<span><b>Website:</b> {this.props.data.website}</span>
-				</div>
+			<div>
+				<Card bg="light">
+					<Card.Header>Contact Info</Card.Header>
+					<Card.Body>
+						<Card.Text>
+							<p>
+								<b>Property Manager:</b> {this.props.data.property_manager_or_landlord}
+								<br/>
+								<b>Phone:</b> {this.props.data.phone}
+								<br/>
+								<b>Email:</b> {this.props.data.email}
+								<br/>
+								<b>Website:</b> {this.props.data.website}
+
+							</p>
+						</Card.Text>
+					</Card.Body>
+				</Card>
 			</div>
+
+
 		);
 	}
 }
