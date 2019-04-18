@@ -293,6 +293,7 @@ class UpdateProperty extends Component {
 								<br/>
 								{this.renderGroups(true)}
 							</div>
+							<div>&nbsp;</div>
 							<div className='save-btn-container'>
 								<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
 								{ localStorage.getItem('email')==='test@test.com' &&
