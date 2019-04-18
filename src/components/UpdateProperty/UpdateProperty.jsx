@@ -189,7 +189,7 @@ class UpdateProperty extends Component {
 
 	showSaveButton() {
 		var elem = document.getElementById('update-property-save-btn');
-		elem.style.display = 'block';
+		elem.style.display = 'inline';
 		return;
 	}
 
