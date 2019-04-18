@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // css
 import './PropertyDataGroupEdit.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 // components
 import {UnitInformation} from '../UnitInformation/UnitInformation.jsx';
@@ -267,6 +267,8 @@ class PropertyDataGroupEdit extends Component {
 						</div>
 						<div className='form-check form-check-inline'>
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
+						</div>
+						<div>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 						</div>
 					</span>

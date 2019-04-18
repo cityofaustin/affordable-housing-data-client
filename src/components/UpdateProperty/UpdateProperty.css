@@ -20,9 +20,11 @@
 	letter-spacing: 5;
 }
 
+/*
 .property-groups-container {
 	margin-left: 100px;
 }
+*/
 
 .save-btn {
 	width: 200px;
@@ -37,9 +39,11 @@
 	border-color: #8CB095;
 }
 
+/*
 .save-btn-container {
 	margin-left: 90px;
 }
+*/
 
 .update-property-left {
 	float: left;

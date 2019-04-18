@@ -12,9 +12,14 @@ import {PropertyDataGroupEdit} from '../PropertyDataGroupEdit/PropertyDataGroupE
 import {ContactInfo} from '../ContactInfo/ContactInfo.jsx';
 import {AssignedUserInfo} from '../AssignedUserInfo/AssignedUserInfo.jsx';
 // css
-import './UpdateProperty.css';
+// import './UpdateProperty.css';
 // libs
 import _ from "underscore";
+
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col' 
+import Card from 'react-bootstrap/Card'
 
 class UpdateProperty extends Component {
 	constructor(props) {
@@ -272,73 +277,105 @@ class UpdateProperty extends Component {
 		}
 		if (this.state.showEditProperty && !this.getIsDuplicate()) {
 			return (
-				<div>
-					
-					<div className='update-property-left'>
-						<div className='property-groups-container'>
-						{
-							this.getPropertyId() &&
-							<h2>Property ID: {this.getPropertyId()}</h2>
-						}
-						{
-							this.getPropertyAddress() &&
-							<h2>{this.getPropertyAddress()}</h2>
-						}
-							{/*<button onClick={() => {this.handleEditPropertyClick(false)}}>Back</button>*/}
-							<br/>
-							{this.renderGroups(true)}
-						</div>
-						<div className='save-btn-container'>
-							<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
-							{ localStorage.getItem('email')==='test@test.com' &&
-								<button id='update-property-delete-btn' onClick={(e) => window.confirm("Are you sure you wish to delete Property " + this.getPropertyId() +"?") && this.handleDelete(this.getPropertyId())}   className='save-btn btn btn-success'>DELETE</button>
+				<Container fluid>
+					<Row>
+						<Col sm={8}>
+							<div className='property-groups-container'>
+							{
+								this.getPropertyId() &&
+								<h2>Property ID: {this.getPropertyId()}</h2>
 							}
-							<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
-							<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
-						</div>
-						<br/>
-						<div style={{'marginLeft': '100px'}}>
-							<h6>What data is 'Basic Info'?</h6>
-							<div>- website</div>
-							<div>- unit type</div>
-							<div>- council district</div>
-							<div>- total units</div>
-							<div>- total psh units</div>
-							<div>- total income restricted units</div>
-							<div>- property name</div>
-							<div>- street address</div>
-							<div>- city</div>
-							<div>- state</div>
-							<div>- zip code</div>
-							<div>- phone</div>
-						</div>
-						<br/>
-						<div style={{'marginLeft': '100px'}}>
-							<h6>What data is 'Tenant Criteria'?</h6>
-							<div>- accepts section 8 </div>
-							<div>- has available units</div>
-							<div>- only serves students</div>
-							<div>- only serves elderly</div>
-							<div>- only serves physically disabled persons</div>
-							<div>- only serves mentally disabled person</div>
-							<div>- only serves veterans</div>
-							<div>- only serves military</div>
-							<div>- only serves domestic abuse survivors</div>
-							<div>- other community served information</div>
-							<div>- does this property accept applicants with history of broken leases (and other criteria)</div>
-							<div>- does this property accept applicants with an eviction history (and other criteria)</div>
-							<div>- does this property accept criminal history (and other criteria)</div>
-							<div>- has waitlist</div>
-							<div>- schools</div>
-						</div>
-						<br/>
-					</div>
-					<div className='update-property-right'>
-						<ContactInfo data={this.state.data} />
-						<br/>
-						<AssignedUserInfo propertyId={this.state.propertyId} />
-					</div>
-				</div>
+							{
+								this.getPropertyAddress() &&
+								<h2>{this.getPropertyAddress()}</h2>
+							}
+								{/*<button onClick={() => {this.handleEditPropertyClick(false)}}>Back</button>*/}
+								<br/>
+								{this.renderGroups(true)}
+							</div>
+							<div className='save-btn-container'>
+								<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
+								{ localStorage.getItem('email')==='test@test.com' &&
+									<button id='update-property-delete-btn' onClick={(e) => window.confirm("Are you sure you wish to delete Property " + this.getPropertyId() +"?") && this.handleDelete(this.getPropertyId())}   className='save-btn btn btn-success'>DELETE</button>
+								}
+								<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>
+								<span id='save-message-failure' className='text-danger'>There was an issue saving your data. Please try again or contact system adminstrator.</span>
+							</div>
+							<br />
+							<Row>
+								<Col>
+									<Card bg="light">
+										<Card.Header>What data is 'Basic Info'?</Card.Header>
+										<Card.Body>
+											<Card.Text>
+												<ul>
+													<li>property name</li>
+													<li>street address</li>
+													<li>city</li>
+													<li>state</li>
+													<li>zip code</li>
+													<li>phone</li>
+													<li>website</li>
+													<li>unit type</li>
+													<li>council district</li>
+													<li>total units</li>
+													<li>total psh units</li>
+													<li>total income restricted units</li>
+													<li></li>
+													<li></li>
+												</ul>
+											</Card.Text>
+										</Card.Body>
+									</Card>
+								</Col>
+								<Col>
+									<Card bg="light">
+										<Card.Header>What data is 'Tenant Criteria'?</Card.Header>
+										<Card.Body>
+											<Card.Text>
+												<ul>
+													<li>accepts section 8</li>
+													<li>has available units</li>
+													<li>only serves students</li>
+													<li>only serves elderly</li>
+													<li>only serves physically disabled persons</li>
+													<li>only serves mentally disabled person</li>
+													<li>only serves veterans</li>
+													<li>only serves military</li>
+													<li>only serves domestic abuse survivors</li>
+													<li>other community served information</li>
+													<li>does this property accept applicants with history of broken leases (and other criteria)</li>
+													<li>does this property accept applicants with an eviction history (and other criteria)</li>
+													<li>does this property accept criminal history (and other criteria)</li>
+													<li>has waitlist</li>
+													<li>schools</li>
+												</ul>
+											</Card.Text>
+										</Card.Body>
+									</Card>
+								</Col>
+							</Row>
+							
+
+							
+						
+						</Col>
+						<Col sm={4}>
+						
+							<ContactInfo data={this.state.data} />
+							<br/>
+							<AssignedUserInfo propertyId={this.state.propertyId} />
+						</Col>
+					</Row>
+					<Row>
+						<Col sm={6}>
+							
+						</Col>
+						<Col sm={6}>
+						
+						</Col>
+					</Row>
+				</Container>
 			);
 		}
 		else {
