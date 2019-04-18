@@ -316,22 +316,20 @@ class UpdateProperty extends Component {
 							<Card bg="light">
 								<Card.Header>What data is 'Basic Info'?</Card.Header>
 								<Card.Body>
-									<Card.Text>
-										<ul>
-											<li>property name</li>
-											<li>street address</li>
-											<li>city</li>
-											<li>state</li>
-											<li>zip code</li>
-											<li>phone</li>
-											<li>website</li>
-											<li>unit type</li>
-											<li>council district</li>
-											<li>total units</li>
-											<li>total psh units</li>
-											<li>total income restricted units</li>
-										</ul>
-									</Card.Text>
+									<ul>
+										<li>property name</li>
+										<li>street address</li>
+										<li>city</li>
+										<li>state</li>
+										<li>zip code</li>
+										<li>phone</li>
+										<li>website</li>
+										<li>unit type</li>
+										<li>council district</li>
+										<li>total units</li>
+										<li>total psh units</li>
+										<li>total income restricted units</li>
+									</ul>
 								</Card.Body>
 							</Card>
 						</Col>
@@ -339,25 +337,23 @@ class UpdateProperty extends Component {
 							<Card bg="light">
 								<Card.Header>What data is 'Tenant Criteria'?</Card.Header>
 								<Card.Body>
-									<Card.Text>
-										<ul>
-											<li>accepts section 8</li>
-											<li>has available units</li>
-											<li>only serves students</li>
-											<li>only serves elderly</li>
-											<li>only serves physically disabled persons</li>
-											<li>only serves mentally disabled person</li>
-											<li>only serves veterans</li>
-											<li>only serves military</li>
-											<li>only serves domestic abuse survivors</li>
-											<li>other community served information</li>
-											<li>does this property accept applicants with history of broken leases (and other criteria)</li>
-											<li>does this property accept applicants with an eviction history (and other criteria)</li>
-											<li>does this property accept criminal history (and other criteria)</li>
-											<li>has waitlist</li>
-											<li>schools</li>
-										</ul>
-									</Card.Text>
+									<ul>
+										<li>accepts section 8</li>
+										<li>has available units</li>
+										<li>only serves students</li>
+										<li>only serves elderly</li>
+										<li>only serves physically disabled persons</li>
+										<li>only serves mentally disabled person</li>
+										<li>only serves veterans</li>
+										<li>only serves military</li>
+										<li>only serves domestic abuse survivors</li>
+										<li>other community served information</li>
+										<li>does this property accept applicants with history of broken leases (and other criteria)</li>
+										<li>does this property accept applicants with an eviction history (and other criteria)</li>
+										<li>does this property accept criminal history (and other criteria)</li>
+										<li>has waitlist</li>
+										<li>schools</li>
+									</ul>
 								</Card.Body>
 							</Card>
 						</Col>

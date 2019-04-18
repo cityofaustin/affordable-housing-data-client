@@ -18,16 +18,13 @@ class ContactInfo extends Component {
 					<Card.Body>
 						<Card.Title>Contact Info</Card.Title>
 						<Card.Text>
-							<p>
-								<b>Property Manager:</b> {this.props.data.property_manager_or_landlord}
-								<br/>
-								<b>Phone:</b> {this.props.data.phone}
-								<br/>
-								<b>Email:</b> {this.props.data.email}
-								<br/>
-								<b>Website:</b> {this.props.data.website}
-
-							</p>
+							<b>Property Manager:</b> {this.props.data.property_manager_or_landlord}
+							<br/>
+							<b>Phone:</b> {this.props.data.phone}
+							<br/>
+							<b>Email:</b> {this.props.data.email}
+							<br/>
+							<b>Website:</b> {this.props.data.website}
 						</Card.Text>
 					</Card.Body>
 				</Card>
