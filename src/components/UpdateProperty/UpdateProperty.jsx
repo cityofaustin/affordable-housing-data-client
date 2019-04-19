@@ -55,13 +55,7 @@ class UpdateProperty extends Component {
 		axios.get(queryString)
 			.then((res) => {
 				//console.log('what is res');
-				if (res.data.verifications===null){
-					this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'verifications': {}, 'showEditProperty': true, propertyId: propertyId});
-					console.log(res.data.verifications);
-				} else {
-				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'verifications': res.data.verifications, 'showEditProperty': true, propertyId: propertyId});
-				//console.log(res.data.verifications);
-				}
+				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'verifications': (res.data.verifications===null) ? {} : res.data.verifications, 'showEditProperty': true, propertyId: propertyId});
 			})
 			.catch((e) => {
 				//console.log('inside catch');
