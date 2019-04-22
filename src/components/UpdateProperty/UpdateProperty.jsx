@@ -11,11 +11,10 @@ import {PropertyDataGroupView} from '../PropertyDataGroupView/PropertyDataGroupV
 import {PropertyDataGroupEdit} from '../PropertyDataGroupEdit/PropertyDataGroupEdit.jsx';
 import {ContactInfo} from '../ContactInfo/ContactInfo.jsx';
 import {AssignedUserInfo} from '../AssignedUserInfo/AssignedUserInfo.jsx';
-// css
-// import './UpdateProperty.css';
 // libs
 import _ from "underscore";
 
+// css
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col' 
