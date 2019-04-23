@@ -89,12 +89,11 @@ class AssignedUserInfo extends Component {
 						<Card.Text>
 							<b>Assigned To:</b> {this.renderAssignedTo()}
 						</Card.Text>
-							
 						<ButtonToolbar>
 							{ this.state.assignedTo &&
-								<Button variant="outline-secondary" size="sm" onClick={this.handleUnassignUser.bind(this)} className='assign-info-btn '>Unassign User</Button>
+								<Button variant="info" size="sm" onClick={this.handleUnassignUser.bind(this)} className='assign-info-btn '>Unassign User</Button>
 							}
-							&nbsp; <Button variant="outline-secondary" size="sm" onClick={this.handleAssignToMe.bind(this)} className='assign-info-btn'>Assign To Me</Button>
+							&nbsp; <Button variant="info" size="sm" onClick={this.handleAssignToMe.bind(this)} className='assign-info-btn'>Assign To Me</Button>
 						</ButtonToolbar>
 					</Card.Body>
 				</Card>
