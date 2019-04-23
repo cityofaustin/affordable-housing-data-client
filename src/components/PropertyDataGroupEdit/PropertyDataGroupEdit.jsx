@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // css
 import './PropertyDataGroupEdit.css';
-//import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 // components
 import {UnitInformation} from '../UnitInformation/UnitInformation.jsx';
@@ -236,16 +236,16 @@ class PropertyDataGroupEdit extends Component {
 		var getInput = (field, dataType, value, isEditable) => {
 			if (isTypeText(dataType) || isTypeNum(dataType)) {
 				return (
-					<span className='form-group'>
+					<div className='form-group'>
 						<input type={isTypeText(dataType) ? 'text' : 'number'} readOnly={!isEditable} className='form-control text-or-num-input' id={field} defaultValue={(value || value === 0) ? value : ''} onChange={this.onInputChange.bind(this, field)} />
 					{ field !== 'id' &&
 						/* exclude verify button from id */
 						<span>
-							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
+							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 						</span>
 					}
-					</span>
+					</div>
 				);
 			} else if (isTypeBool(dataType)) {
 				return (
@@ -266,7 +266,7 @@ class PropertyDataGroupEdit extends Component {
 							</label>
 						</div>
 						<div className='form-check form-check-inline'>
-							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
+							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
 						</div>
 						<div>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
@@ -282,34 +282,38 @@ class PropertyDataGroupEdit extends Component {
 				const minDate = (moment(this.state.startDate).isValid()) ? sDate : today;	
 				const maxDate = (moment(this.state.ExpireDate).isValid()) ? eDate : today;	
 				return (
-					<span className='form-group'>
+					<div className='form-group'>
 					{field === 'affordability_start' && 
-					<DatePicker value={moment(this.state.startDate).isValid() ? moment(this.state.startDate).format('YYYY-MM-DD') : ""} 
-					selected={minDate} 
-					onChange={this.handleStartDateChange.bind(this,field)} 
-					dateFormat="yyyy-MM-dd" 
-					isClearable={true} 
-					showYearDropdown 
-					scrollableYearDropdown
-					yearDropdownItemNumber={15}/>
+						<DatePicker value={moment(this.state.startDate).isValid() ? moment(this.state.startDate).format('YYYY-MM-DD') : ""} 
+						selected={minDate} 
+						onChange={this.handleStartDateChange.bind(this,field)}
+						className="form-control"
+						dateFormat="yyyy-MM-dd" 
+						isClearable={true} 
+						showYearDropdown 
+						scrollableYearDropdown
+						yearDropdownItemNumber={15}/>
 					}
 					{field === 'affordability_expiration' &&
-					<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} 
-					selected={maxDate} 
-					minDate={minDate} 
-					onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
-					isClearable={true} 
-					showYearDropdown
-					yearDropdownItemNumber={15}/>
+						<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} 
+						selected={maxDate} 
+						minDate={minDate} 
+						className="form-control"
+						onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
+						isClearable={true} 
+						showYearDropdown
+						yearDropdownItemNumber={15}/>
 					}
 					{ field !== 'id' &&
 						/* exclude verify button from id */
-						<span>
-							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
-							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
-						</span>
+						<div>
+							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
+							
+								<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
+
+						</div>
 					}
-					</span>
+					</div>
 				);
 			} else if (dataType.match(/.*enum.*/)) {
 
@@ -361,7 +365,7 @@ class PropertyDataGroupEdit extends Component {
 				elements.push(
 					<span key={field + '_verify_btn'}>
 						<div className='form-check form-check-inline'>
-							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn btn-primary ' + (isVerified(field) ? 'verified-btn' : 'verify-btn')}>{isVerified(field) ? 'verified' : 'verify'}</button>
+							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 						</div>
 					</span>
