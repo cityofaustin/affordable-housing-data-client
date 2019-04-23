@@ -153,7 +153,7 @@ class PropertyDataGroupEdit extends Component {
 		if (verifyVal === true) {
 			// make not verified
 			this.props.updatePropertyThis.state.updatedData[field].verify = false;
-			e.target.innerText = 'VERIFY'
+			e.target.innerText = 'Verify'
 			e.target.classList.remove('verified-btn');
 			e.target.classList.add('verify-btn');
 
@@ -161,7 +161,7 @@ class PropertyDataGroupEdit extends Component {
 		} else {
 			// make verified
 			this.props.updatePropertyThis.state.updatedData[field].verify = true;
-			e.target.innerText = 'VERIFIED'
+			e.target.innerText = 'Verified'
 			e.target.classList.remove('verify-btn');
 			e.target.classList.add('verified-btn');
 
