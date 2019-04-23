@@ -306,12 +306,12 @@ class PropertyDataGroupEdit extends Component {
 					}
 					{ field !== 'id' &&
 						/* exclude verify button from id */
-						<div>
+						<span>
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
 							
 								<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 
-						</div>
+						</span>
 					}
 					</div>
 				);
