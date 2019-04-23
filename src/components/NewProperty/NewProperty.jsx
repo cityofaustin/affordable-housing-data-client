@@ -10,7 +10,8 @@ import axios from 'axios';
 // import {TopNav} from '../TopNav/TopNav.jsx';
 // css
 import '../UpdateProperty/UpdateProperty.css';
-import './NewProperty.css';
+// import './NewProperty.css';
+
 
 class NewProperty extends Component {
 	constructor(props) {
@@ -60,10 +61,11 @@ class NewProperty extends Component {
 		}
 
 		return (
-			<div>
+			<div className="container">
+				<h1>New Property</h1>
 				<div className='new-property-left'>
-					<div>After the new property has been created you will be redirected to a page where you can edit additional attributes.</div>
-					<br/>
+					<p>After the new property has been created you will be redirected to a page where you can edit additional attributes.</p>
+
 					<div className='new-property-input-container'>
 						<span><b>Property Name:</b></span>
 						<br/>
