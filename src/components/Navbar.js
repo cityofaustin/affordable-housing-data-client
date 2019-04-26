@@ -16,6 +16,7 @@ class NavBar extends Component {
         localStorage.removeItem('usertoken')
         localStorage.removeItem('isLoggedIn')
         localStorage.removeItem('email')
+        localStorage.removeItem('is_admin')
         this.props.history.push('/')
     }
     

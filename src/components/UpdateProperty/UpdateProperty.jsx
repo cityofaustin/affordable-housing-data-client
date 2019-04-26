@@ -293,7 +293,7 @@ class UpdateProperty extends Component {
 							<div>&nbsp;</div>
 							<div className='save-btn-container'>
 								<button id='update-property-save-btn'   onClick={this.handleSave.bind(this)} className='save-btn btn btn-success'>SAVE</button>
-								{ localStorage.getItem('email')==='test@test.com' &&
+								{ localStorage.getItem('is_admin')==='1' &&
 									<button id='update-property-delete-btn' onClick={(e) => window.confirm("Are you sure you wish to delete Property " + this.getPropertyId() +"?") && this.handleDelete(this.getPropertyId())}   className='save-btn btn btn-success'>DELETE</button>
 								}
 								<span id='save-message-success' className='text-success'>Success! Your data was saved!</span>

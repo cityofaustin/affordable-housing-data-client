@@ -42,6 +42,7 @@ class Login extends Component {
 				elem.style.display = 'none';
 				localStorage.setItem('isLoggedIn', 'true');
 				localStorage.setItem('email', email);
+				localStorage.setItem('is_admin', res.data.is_admin);
 				this.setState(() => ({
 					redirectToReferrer: true
 				}));
