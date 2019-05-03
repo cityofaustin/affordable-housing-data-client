@@ -13,7 +13,7 @@ import {ContactInfo} from '../ContactInfo/ContactInfo.jsx';
 import {AssignedUserInfo} from '../AssignedUserInfo/AssignedUserInfo.jsx';
 // libs
 import _ from "underscore";
-
+import moment, { now } from 'moment';
 // css
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -23,7 +23,6 @@ import Card from 'react-bootstrap/Card'
 class UpdateProperty extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			redirectTo: null,
 			showUpdateProperty: false,
@@ -54,7 +53,8 @@ class UpdateProperty extends Component {
 		axios.get(queryString)
 			.then((res) => {
 				//console.log('what is res');
-				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'verifications': (res.data.verifications===null) ? {} : res.data.verifications, 'showEditProperty': true, propertyId: propertyId});
+				//console.log(res);
+				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'notes':(res.data.notes===null) ? {} : res.data.notes, 'verifications': (res.data.verifications===null) ? {} : res.data.verifications, 'showEditProperty': true, propertyId: propertyId});
 			})
 			.catch((e) => {
 				//console.log('inside catch');
@@ -62,7 +62,6 @@ class UpdateProperty extends Component {
 				//console.log(e.response);
 				if (e && e.response && !e.response.data.success && e.response.data.redirect) {
 					this.setState({redirectTo: '/'});
-					//console.log('something');
 				}
 			});
 	}
@@ -70,8 +69,6 @@ class UpdateProperty extends Component {
 	handleUpdateData(data) {
 		if (!_.has(this.state.updatedData, data.field)) {
 			this.setState(Object.assign(this.state.updatedData,{[data.field]:{}}));
-			//this.state.updatedData[data.field] = {};
-			//console.log(this.state.updatedData);
 		}
 
 		// TODO: for strings, need to check if there it is an empty string, if it is, value should be null
@@ -82,6 +79,38 @@ class UpdateProperty extends Component {
 		} else {
 			this.setState(Object.assign(this.state.updatedData,{[data.field]:{value:data.value}}));
 			//this.state.updatedData[data.field].value = data.value;
+		}
+	}
+
+	//onBlur event for Note textarea field
+	NoteChange(e) {
+		var updateData = {
+			field: 'Note',
+			value: e.target.value
+		}
+		this.handleUpdateData(updateData);
+	}
+
+	//after click SAVE button, add current state value to NOTE history
+	updateNote(){
+		if ((this.state.updatedData.Note !== undefined) && (this.state.updatedData.Note.value !==null)) {
+			const keyNum = Object.keys(this.state.notes).length;
+			var obj = {};
+			var index = 1;
+			obj[index] = {note_id: this.props.match.params.id, created_on: now(), created_by: localStorage.getItem('email'), note_text:this.state.updatedData.Note.value};
+			index ++;
+			if (keyNum > 0) {
+				var ct;
+				for (ct = 1; ct <= keyNum; ct ++) { // add old values after new value
+				obj[index] = {note_id: this.state.notes[ct].note_id, created_on: this.state.notes[ct].created_on, created_by: this.state.notes[ct].created_by, note_text:this.state.notes[ct].note_text};
+				index ++;
+				}
+			}
+			this.setState({notes:obj});
+			var elem = document.getElementById('notetext');
+			elem.value = '';
+			//console.log(obj);
+			//console.log(this.state.notes);
 		}
 	}
 
@@ -212,9 +241,6 @@ class UpdateProperty extends Component {
 		this.hideSaveButton();
 		this.hideSaveMessage();
 		this.hideFailureMessage();
-		//const propertyId = this.props.match.params.id;
-		//console.log(this.state.updatedData);
-		//console.log(this.state.verifications)
 		
 		axios.post(
 			`/update_property?userEmail=${localStorage.getItem('email')}`,
@@ -225,6 +251,8 @@ class UpdateProperty extends Component {
 			.then((res) => {
 				this.showSaveButton();
 				this.showSaveMessage();
+				this.updateNote();
+				this.setState({updatedData:{}}); //SAVE successfully. Now cleanup variable that holds updated data.
 			})
 			.catch((e) => {
 				this.showSaveButton();
@@ -289,6 +317,17 @@ class UpdateProperty extends Component {
 								{/*<button onClick={() => {this.handleEditPropertyClick(false)}}>Back</button>*/}
 								<br/>
 								{this.renderGroups(true)}
+							</div>
+							<div className='note-section'>
+								<h5>Note:</h5>
+								<textarea id="notetext" cols="80" rows="6" placeholder="Your text here" onBlur={this.NoteChange.bind(this)} />
+								<div>Note History:
+								<ul>
+									{Object.keys(this.state.notes).map((key, index) =>
+										<li key={index}>{this.state.notes[key].note_text}  by {this.state.notes[key].created_by}  on {moment(this.state.notes[key].created_on).format('YYYY-MM-DD h:mma')}  </li>
+									)}
+								</ul>
+								</div>
 							</div>
 							<div>&nbsp;</div>
 							<div className='save-btn-container'>
