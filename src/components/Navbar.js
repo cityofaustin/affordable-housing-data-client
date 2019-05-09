@@ -3,11 +3,28 @@ import { Link, withRouter } from 'react-router-dom'
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
+import axios from 'axios'
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+        //console.log(localStorage.isLoggedIn);
+        var email = localStorage.getItem('email');
+        var queryString = '/registration?userEmail=' + email;
+        
+        axios.get(queryString)
+            .then((res) => {//authortized user. Do nothing.
+            })
+            .catch((e) => {
+                //console.log(e.response.data.success);
+                // if not authorized, we want to redirect to login page
+                if (e && e.response && !e.response.data.success && e.response.data.redirect) {
+                    localStorage.clear();
+                    this.setState({redirectTo: '/'});
+                    //console.log('something');
+                }
+            });
     }
 
     
@@ -53,7 +70,7 @@ class NavBar extends Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        {localStorage.email ? userLink : loginRegLink}
+                        { (localStorage.getItem('email')===null) ? loginRegLink:userLink}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

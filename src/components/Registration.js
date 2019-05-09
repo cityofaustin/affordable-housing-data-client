@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { register } from './RegistrationFunctions';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -21,11 +22,24 @@ const initalState = {
 
 class Registration extends Component {
     constructor(props) {
-        super(props)
-        this.state = initalState
+        super(props);
+        this.state = initalState;
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        var email = localStorage.getItem('email');
+        var queryString = '/registration?userEmail=' + email;
+	    axios.get(queryString)
+            .then((res) => {//authorized user. Do nothing
+            })
+            .catch((e) => {
+                //console.log(e.response);
+                // if not authorized, we want to redirect to login page
+                if (e && e.response && !e.response.data.success && e.response.data.redirect) {
+                    this.setState({redirectTo: '/'});
+                //console.log('something');
+            }
+        });
     }
 
     onChange (e) {
@@ -107,8 +121,8 @@ class Registration extends Component {
     }
 
     render () {
-		if (localStorage.getItem('email')===null) {
-			return <Redirect to='/'/>;
+		if (this.state.redirectTo) {
+			return <Redirect to={this.state.redirectTo} />
 		}
         return (
             <div className="container">
