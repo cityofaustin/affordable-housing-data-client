@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { register } from './RegistrationFunctions';
+import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import './Registration.css';
 // import Nav from 'react-bootstrap/Nav';
 
 const initalState = {
@@ -57,10 +59,21 @@ class Registration extends Component {
         
         if (emailError || lastnameError || firstnameError || passwordError){
             this.setState({emailError, lastnameError, firstnameError, passwordError});
+            this.hideSaveMessage();
             return false;
         }
 
         return true;
+    }
+
+    hideSaveMessage() {
+        document.getElementById('regi-success').style.display = 'none';
+        return;
+    }
+
+    showSaveMessage() {
+        document.getElementById('regi-success').style.display = 'block';
+        return;
     }
 
     onSubmit (e) {
@@ -80,8 +93,10 @@ class Registration extends Component {
             }
 
             register(user).then(res => {
-                this.props.history.push(`/`)
-            })
+                this.props.history.push(`/registration/`);
+                this.showSaveMessage();
+            });
+
 
             //clear form
             this.setState(initalState);
@@ -92,6 +107,9 @@ class Registration extends Component {
     }
 
     render () {
+		if (localStorage.getItem('email')===null) {
+			return <Redirect to='/'/>;
+		}
         return (
             <div className="container">
                 
@@ -133,10 +151,14 @@ class Registration extends Component {
                     <Button type="submit" variant="primary">
                     Register
                     </Button>
+                    <div><span id='regi-success' className='text-success'>
+                        Success! User has been registered.
+                    </span></div>
                 </Form>
             </div>
         )
     }
 }
 
-export default Registration
+export { Registration };
+//export default Registration
