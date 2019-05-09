@@ -28,15 +28,15 @@ class NavBar extends Component {
                 <li className="nav-item">
                     <Link to="/" className="nav-link">Home</Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/registration" className="nav-link">Registration</Link>
-                </li>
             </ul>
         )
         const userLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
                     <Link to="/update_properties" className="nav-link">All Properties</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/registration" className="nav-link">Registration</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/" onClick={this.logOut.bind(this)} className="nav-link">
