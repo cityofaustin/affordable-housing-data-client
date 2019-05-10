@@ -11,7 +11,7 @@ class NavBar extends Component {
 		this.state = {};
         //console.log(localStorage.isLoggedIn);
         var email = localStorage.getItem('email');
-        var queryString = '/registration?userEmail=' + email;
+        var queryString = '/checkuser?userEmail=' + email;
         
         axios.get(queryString)
             .then((res) => {//authortized user. Do nothing.

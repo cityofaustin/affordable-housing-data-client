@@ -28,7 +28,7 @@ class Registration extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         var email = localStorage.getItem('email');
-        var queryString = '/registration?userEmail=' + email;
+        var queryString = '/checkuser?userEmail=' + email;
 	    axios.get(queryString)
             .then((res) => {//should always return 200, check success value to determine action.
                 if (res &&  !res.data.success && res.data.redirect) {
