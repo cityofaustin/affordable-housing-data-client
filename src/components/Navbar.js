@@ -15,12 +15,18 @@ class NavBar extends Component {
         
         axios.get(queryString)
             .then((res) => {//authortized user. Do nothing.
+                if (res &&  !res.data.success && res.data.redirect) {
+                    localStorage.clear();
+                    this.setState({redirectTo: '/'});
+                    //console.log('something');
+                }
             })
             .catch((e) => {
-                //console.log(e.response.data.success);
                 // if not authorized, we want to redirect to login page
+                console.log(e.response);
+                //return res.status(401).send({success: false, redirect: '/'})
                 if (e && e.response && !e.response.data.success && e.response.data.redirect) {
-                    localStorage.clear();
+                    //localStorage.clear();
                     this.setState({redirectTo: '/'});
                     //console.log('something');
                 }
@@ -36,8 +42,8 @@ class NavBar extends Component {
         localStorage.removeItem('is_admin')
         this.props.history.push('/')
     }
-    
 
+    
     render() {
         
         const loginRegLink = (

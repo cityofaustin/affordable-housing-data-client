@@ -30,7 +30,12 @@ class Registration extends Component {
         var email = localStorage.getItem('email');
         var queryString = '/registration?userEmail=' + email;
 	    axios.get(queryString)
-            .then((res) => {//authorized user. Do nothing
+            .then((res) => {//should always return 200, check success value to determine action.
+                if (res &&  !res.data.success && res.data.redirect) {
+                    localStorage.clear();
+                    this.setState({redirectTo: '/'});
+                    //console.log('something');
+                }
             })
             .catch((e) => {
                 //console.log(e.response);
@@ -123,7 +128,7 @@ class Registration extends Component {
     render () {
 		if (this.state.redirectTo) {
 			return <Redirect to={this.state.redirectTo} />
-		}
+        } else {
         return (
             <div className="container">
                 
@@ -171,7 +176,7 @@ class Registration extends Component {
                 </Form>
             </div>
         )
-    }
+    }}
 }
 
 export { Registration };
