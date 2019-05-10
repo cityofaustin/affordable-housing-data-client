@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { register } from './RegistrationFunctions';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -21,11 +22,29 @@ const initalState = {
 
 class Registration extends Component {
     constructor(props) {
-        super(props)
-        this.state = initalState
+        super(props);
+        this.state = initalState;
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        var email = localStorage.getItem('email');
+        var queryString = '/checkuser?userEmail=' + email;
+	    axios.get(queryString)
+            .then((res) => {//should always return 200, check success value to determine action.
+                if (res &&  !res.data.success && res.data.redirect) {
+                    localStorage.clear();
+                    this.setState({redirectTo: '/'});
+                    //console.log('something');
+                }
+            })
+            .catch((e) => {
+                //console.log(e.response);
+                // if not authorized, we want to redirect to login page
+                if (e && e.response && !e.response.data.success && e.response.data.redirect) {
+                    this.setState({redirectTo: '/'});
+                //console.log('something');
+            }
+        });
     }
 
     onChange (e) {
@@ -107,9 +126,9 @@ class Registration extends Component {
     }
 
     render () {
-		if (localStorage.getItem('email')===null) {
-			return <Redirect to='/'/>;
-		}
+		if (this.state.redirectTo) {
+			return <Redirect to={this.state.redirectTo} />
+        } else {
         return (
             <div className="container">
                 
@@ -157,7 +176,7 @@ class Registration extends Component {
                 </Form>
             </div>
         )
-    }
+    }}
 }
 
 export { Registration };
