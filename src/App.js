@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
 import { debugLog } from './components/utilities';
 
 import {Login} from './components/Login/Login'
-import Registration from './components/Registration'
+import {Registration} from './components/Registration'
 import Notfound from './components/notfound'
 import {UpdateProperties} from './components/UpdateProperties/UpdateProperties.jsx';
 import {UpdateProperty} from './components/UpdateProperty/UpdateProperty.jsx';

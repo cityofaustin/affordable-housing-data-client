@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { register } from './RegistrationFunctions';
+import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import './Registration.css';
 // import Nav from 'react-bootstrap/Nav';
 
 const initalState = {
@@ -19,11 +22,29 @@ const initalState = {
 
 class Registration extends Component {
     constructor(props) {
-        super(props)
-        this.state = initalState
+        super(props);
+        this.state = initalState;
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        var email = localStorage.getItem('email');
+        var queryString = '/checkuser?userEmail=' + email;
+	    axios.get(queryString)
+            .then((res) => {//should always return 200, check success value to determine action.
+                if (res &&  !res.data.success && res.data.redirect) {
+                    localStorage.clear();
+                    this.setState({redirectTo: '/'});
+                    //console.log('something');
+                }
+            })
+            .catch((e) => {
+                //console.log(e.response);
+                // if not authorized, we want to redirect to login page
+                if (e && e.response && !e.response.data.success && e.response.data.redirect) {
+                    this.setState({redirectTo: '/'});
+                //console.log('something');
+            }
+        });
     }
 
     onChange (e) {
@@ -57,10 +78,21 @@ class Registration extends Component {
         
         if (emailError || lastnameError || firstnameError || passwordError){
             this.setState({emailError, lastnameError, firstnameError, passwordError});
+            this.hideSaveMessage();
             return false;
         }
 
         return true;
+    }
+
+    hideSaveMessage() {
+        document.getElementById('regi-success').style.display = 'none';
+        return;
+    }
+
+    showSaveMessage() {
+        document.getElementById('regi-success').style.display = 'block';
+        return;
     }
 
     onSubmit (e) {
@@ -80,7 +112,8 @@ class Registration extends Component {
             }
 
             register(user).then(res => {
-                this.props.history.push(`/`)
+                this.props.history.push(`/registration/`);
+                this.showSaveMessage();
             })
 
             //clear form
@@ -92,8 +125,11 @@ class Registration extends Component {
     }
 
     render () {
-        return (
-            <div className="container">
+        if (this.state.redirectTo) {
+            return <Redirect to={this.state.redirectTo} />
+        } else {
+            return (
+                <div className="container">
                 
                 <h1>Registration</h1>
                 <Form noValidate onSubmit={this.onSubmit}>
@@ -133,10 +169,13 @@ class Registration extends Component {
                     <Button type="submit" variant="primary">
                     Register
                     </Button>
+                    <div><span id='regi-success' className='text-success'>
+                        Success! User has been registered.
+                    </span></div>
                 </Form>
             </div>
         )
-    }
+    }}
 }
 
-export default Registration
+export { Registration };
