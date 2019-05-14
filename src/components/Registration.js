@@ -114,7 +114,8 @@ class Registration extends Component {
             register(user).then(res => {
                 this.props.history.push(`/registration/`);
                 this.showSaveMessage();
-            })
+            });
+
 
             //clear form
             this.setState(initalState);
@@ -125,11 +126,11 @@ class Registration extends Component {
     }
 
     render () {
-        if (this.state.redirectTo) {
-            return <Redirect to={this.state.redirectTo} />
+		if (this.state.redirectTo) {
+			return <Redirect to={this.state.redirectTo} />
         } else {
-            return (
-                <div className="container">
+        return (
+            <div className="container">
                 
                 <h1>Registration</h1>
                 <Form noValidate onSubmit={this.onSubmit}>
@@ -179,3 +180,4 @@ class Registration extends Component {
 }
 
 export { Registration };
+//export default Registration

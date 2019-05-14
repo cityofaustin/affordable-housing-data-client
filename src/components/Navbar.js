@@ -4,14 +4,15 @@ import { Link, withRouter } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
+
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
-        this.state = {};
+		this.state = {};
         //console.log(localStorage.isLoggedIn);
         var email = localStorage.getItem('email');
         var queryString = '/checkuser?userEmail=' + email;
-
+        
         axios.get(queryString)
             .then((res) => {//authortized user. Do nothing.
                 if (res &&  !res.data.success && res.data.redirect) {
@@ -41,8 +42,8 @@ class NavBar extends Component {
         localStorage.removeItem('is_admin')
         this.props.history.push('/')
     }
-    
 
+    
     render() {
         
         const loginRegLink = (
