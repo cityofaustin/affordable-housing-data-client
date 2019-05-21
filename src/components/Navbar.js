@@ -72,13 +72,32 @@ class NavBar extends Component {
         return (
 
             <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
-                <Navbar.Brand href="/">Austin Affordable Housing Data Portal</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                        { (localStorage.getItem('email')===null) ? loginRegLink:userLink}
-                    </Nav>
-                </Navbar.Collapse>
+                <Nav className="mr-auto">
+                    <Navbar.Brand href="/">Austin Affordable Housing Data Portal</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            { (localStorage.getItem('email')===null) ? loginRegLink:userLink}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Nav>
+                <Nav>
+                    <Nav.Link href="/">
+                    {(function() {
+                        switch(localStorage.getItem('is_admin')){
+                        case '0':
+                          return 'Administrator: ';
+                        case '1':
+                          return 'Power User: ';
+                        case '2':
+                          return 'Navigator: ';
+                        default:
+                          return null;
+                    }
+                })()}
+                    {localStorage.getItem('email')}
+                    </Nav.Link>
+                </Nav>
             </Navbar>
         )
     }
