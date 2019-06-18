@@ -169,7 +169,7 @@ class PropertyDataGroupEdit extends Component {
 			this.props.updateVerifications(field, 1);
 		}
 
-		console.log(this.props.updatePropertyThis.state.updatedData);
+		//console.log(this.props.updatePropertyThis.state.updatedData);
 	}
 
 	renderGroupEdit() {
@@ -234,11 +234,14 @@ class PropertyDataGroupEdit extends Component {
 		}
 
 		var getInput = (field, dataType, value, isEditable) => {
+			if ((localStorage.getItem('is_admin')=== '2') && (this.state.groupName !== 'Contact Information')){
+				isEditable=false;
+			};
 			if (isTypeText(dataType) || isTypeNum(dataType)) {
 				return (
 					<div className='form-group'>
 						<input type={isTypeText(dataType) ? 'text' : 'number'} readOnly={!isEditable} className='form-control text-or-num-input' id={field} defaultValue={(value || value === 0) ? value : ''} onChange={this.onInputChange.bind(this, field)} />
-					{ field !== 'id' &&
+					{ (field !== 'id' && isEditable) &&
 						/* exclude verify button from id */
 						<span>
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
@@ -252,22 +255,24 @@ class PropertyDataGroupEdit extends Component {
 					<span>
 						<div className='form-check form-check-inline'>
 							<label className='form-check-label' htmlFor={field + '_yes'}>
-								<input id={field + '_yes'} className='form-check-input' readOnly={!isEditable} name={field} type='radio' defaultChecked={value === 1 ? true : false} onClick={this.onRadioChange.bind(this, field, true)} />yes
+								<input id={field + '_yes'} className='form-check-input' disabled={!isEditable} readOnly={!isEditable} name={field} type='radio' defaultChecked={value === 1 ? true : false} onClick={this.onRadioChange.bind(this, field, true)} />yes
 							</label>
 						</div>
 						<div className='form-check form-check-inline'>
 							<label className='form-check-label' htmlFor={field + '_no'}>
-								<input id={field + '_no'} className='form-check-input' readOnly={!isEditable} name={field} type='radio' defaultChecked={value === 0 ? true : false} onClick={this.onRadioChange.bind(this, field, false)}/>no
+								<input id={field + '_no'} className='form-check-input' disabled={!isEditable}   readOnly={!isEditable} name={field} type='radio' defaultChecked={value === 0 ? true : false} onClick={this.onRadioChange.bind(this, field, false)}/>no
 							</label>
 						</div>
 						<div className='form-check form-check-inline'>
 							<label className='form-check-label' htmlFor={field + '_null'}>
-								<input id={field + '_null'} className='form-check-input' readOnly={!isEditable} name={field} type='radio' defaultChecked={(value !== 0 && value !== 1) ? true : false} onClick={this.onRadioChange.bind(this, field, null)}/>unknown
+								<input id={field + '_null'} className='form-check-input' disabled={!isEditable}  readOnly={!isEditable} name={field} type='radio' defaultChecked={(value !== 0 && value !== 1) ? true : false} onClick={this.onRadioChange.bind(this, field, null)}/>unknown
 							</label>
 						</div>
+						{ (isEditable) &&
 						<div className='form-check form-check-inline'>
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
 						</div>
+						}
 						<div>
 							<span style={{'marginLeft': '20px'}}>{getVerifiedInfo(field)}</span>
 						</div>
@@ -289,10 +294,11 @@ class PropertyDataGroupEdit extends Component {
 						onChange={this.handleStartDateChange.bind(this,field)}
 						className="form-control"
 						dateFormat="yyyy-MM-dd" 
-						isClearable={true} 
+						isClearable={isEditable} 
 						showYearDropdown 
 						scrollableYearDropdown
-						yearDropdownItemNumber={15}/>
+						yearDropdownItemNumber={15}
+						disabled={!isEditable} />
 					}
 					{field === 'affordability_expiration' &&
 						<DatePicker  value={moment(this.state.ExpireDate).isValid() ? moment(this.state.ExpireDate).format('YYYY-MM-DD') : ""} 
@@ -300,11 +306,12 @@ class PropertyDataGroupEdit extends Component {
 						minDate={minDate} 
 						className="form-control"
 						onChange={this.handleExpireDateChange.bind(this,field)} dateFormat="yyyy-MM-dd" 
-						isClearable={true} 
+						isClearable={isEditable} 
 						showYearDropdown
-						yearDropdownItemNumber={15}/>
+						yearDropdownItemNumber={15}
+						disabled={!isEditable} />
 					}
-					{ field !== 'id' &&
+					{ (field !== 'id' && isEditable) &&
 						/* exclude verify button from id */
 						<span>
 							<button id={field + '-verify-btn'} onClick={this.handleClickVerify.bind(this, field)} className={'btn ' + (isVerified(field) ? 'btn-success verified-btn' : 'btn-danger verify-btn')}>{isVerified(field) ? 'Verified' : 'Verify'}</button>
@@ -344,7 +351,7 @@ class PropertyDataGroupEdit extends Component {
 							<span key={field + '_' + v}>
 								<div className='form-check form-check-inline'>
 									<label className='form-check-label' htmlFor={field + '_' + v}>
-										<input id={field + '_' + v} className='form-check-input' readOnly={!isEditable} name={field} type='radio' defaultChecked={value == null ? true : false} onClick={this.onRadioChange.bind(this, field, null)} />{v}
+										<input id={field + '_' + v} className='form-check-input' disabled={!isEditable}   readOnly={!isEditable} name={field} type='radio' defaultChecked={value == null ? true : false} onClick={this.onRadioChange.bind(this, field, null)} />{v}
 									</label>
 								</div>
 							</span>
@@ -354,7 +361,7 @@ class PropertyDataGroupEdit extends Component {
 							<span key={field + '_' + v}>
 								<div className='form-check form-check-inline'>
 									<label className='form-check-label' htmlFor={field + '_' + v}>
-										<input id={field + '_' + v} className='form-check-input' readOnly={!isEditable} name={field} type='radio' defaultChecked={(v === value) ? true : false} onClick={this.onRadioChange.bind(this, field, v)} />{v}
+										<input id={field + '_' + v} className='form-check-input' disabled={!isEditable}  readOnly={!isEditable} name={field} type='radio' defaultChecked={(v === value) ? true : false} onClick={this.onRadioChange.bind(this, field, v)} />{v}
 									</label>
 								</div>
 							</span>
@@ -362,6 +369,7 @@ class PropertyDataGroupEdit extends Component {
 					}
 					elements.push(elem);
 				}
+				if (isEditable) {
 				elements.push(
 					<span key={field + '_verify_btn'}>
 						<div className='form-check form-check-inline'>
@@ -370,6 +378,7 @@ class PropertyDataGroupEdit extends Component {
 						</div>
 					</span>
 				);
+				}
 				return elements;
 
 			} else {
