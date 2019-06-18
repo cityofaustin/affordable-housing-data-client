@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import _ from "underscore";
 // css
-// import './UpdatePropertiesTable.css';
+import './UpdatePropertiesTable.css';
 
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
@@ -101,10 +101,10 @@ class UpdatePropertiesTable extends Component {
 			'Address': 1,
 			'Property ID': 0,
 			'Property Name': 1,
-			'Assigned To': 9,
-			'Data Source': 7,
-			'Funding Source': 8,
-			'Flag':10
+			'Assigned To': 6,
+			'Data Source': 4,
+			'Funding Source': 5,
+			'Flag':7
 		};
 
 		var index = searchByMap[searchBy];
@@ -162,13 +162,15 @@ class UpdatePropertiesTable extends Component {
 
 		return (
 			<div className="container-fluid">
+				{ (localStorage.getItem('is_admin') < 2) ?
 				<div className='form-group'>
 					<Button variant="primary"
 						id='new-property-id'
 						onClick={this.handleNewPropertyClick.bind(this)}
 						disabled={false}
 					>New Property</Button>
-				</div>
+				</div> : ""
+				}
 				<div>
 					<p>
 						<b>Basic Info Verified (complete / total):</b> {this.getTotalFieldCount('basicPropertyInfoVerified')} / {this.state.propertyData.length}
@@ -177,11 +179,11 @@ class UpdatePropertiesTable extends Component {
 					</p>
 				</div>
 				<div className="form-row">
-						<div className="form-group col-md-8">
+						<div className="form-group col-md-9">
 							<input onKeyUp={this.handleSearchKeyUp.bind(this)} className='form-control' type="text" id="table-search-input" placeholder="Search by address..." />
 						</div>
 					
-						<div className="form-group col-md-4">
+						<div className="form-group col-md-2">
 							<select value={this.state.value} id='table-search-select' onChange={this.handleSearchSelectChange.bind(this)} className="form-control custom-select">
 								<option>Address</option>
 								<option>Property ID</option>
