@@ -162,13 +162,15 @@ class UpdatePropertiesTable extends Component {
 
 		return (
 			<div className="container-fluid">
+				{ (localStorage.getItem('is_admin') < 2) ?
 				<div className='form-group'>
 					<Button variant="primary"
 						id='new-property-id'
 						onClick={this.handleNewPropertyClick.bind(this)}
 						disabled={false}
 					>New Property</Button>
-				</div>
+				</div> : ""
+				}
 				<div>
 					<p>
 						<b>Basic Info Verified (complete / total):</b> {this.getTotalFieldCount('basicPropertyInfoVerified')} / {this.state.propertyData.length}

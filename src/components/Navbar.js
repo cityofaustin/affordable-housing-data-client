@@ -58,9 +58,11 @@ class NavBar extends Component {
                 <li className="nav-item">
                     <Link to="/update_properties" className="nav-link">All Properties</Link>
                 </li>
+                { (localStorage.getItem('is_admin') < 2) ?
                 <li className="nav-item">
                     <Link to="/registration" className="nav-link">Registration</Link>
-                </li>
+                </li> : ""
+                }
                 <li className="nav-item">
                     <Link to="/" onClick={this.logOut.bind(this)} className="nav-link">
                     Logout
@@ -88,7 +90,7 @@ class NavBar extends Component {
                         case '0':
                           return 'Administrator: ';
                         case '1':
-                          return 'Power User: ';
+                          return 'Super Administrator: ';
                         case '2':
                           return 'Navigator: ';
                         default:
