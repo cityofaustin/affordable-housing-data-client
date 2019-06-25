@@ -131,10 +131,10 @@ class Registration extends Component {
     }
 
     render () {
-        if (localStorage.getItem('is_admin') > 1) {
-            return <h4>You have no access to this page.</h4>
-        } else if (this.state.redirectTo) { 
-			return <Redirect to={this.state.redirectTo} />
+        if ((localStorage.getItem('is_admin') > 1) ||(localStorage.getItem('is_admin') === null)) {
+            return <h4>&nbsp;&nbsp;Access Denied.</h4>
+        } else if (this.state && this.state.redirectTo) { 
+			return <Redirect to={this.state.redirectTo} />;
         } else {
         return (
             <div className="container">
