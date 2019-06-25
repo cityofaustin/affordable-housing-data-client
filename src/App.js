@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // other packages
 // import _ from "underscore";
@@ -35,6 +37,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+            <ToastContainer autoClose={5000} />
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/registration/" component={Registration} />
