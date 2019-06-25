@@ -14,10 +14,11 @@ const initalState = {
     email: '',
     org: '',
     passwd: '',
+    admin_flag: '2',
     lastnameError: '',
     firstnameError: '',
     emailError: '',
-    passwordError: '' 
+    passwordError: ''
 }
 
 class Registration extends Component {
@@ -48,12 +49,15 @@ class Registration extends Component {
     }
 
     onChange (e) {
-        const isCheckbox = e.target.type === "checkbox"
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        //const isCheckbox = e.target.type === "checkbox"
         this.setState({ 
-            [e.target.name]: isCheckbox
-                ? e.target.checked
-                : e.target.value 
+            [name]: value 
         })
+        console.log(target);
     }
 
     validate = () => {
@@ -78,7 +82,7 @@ class Registration extends Component {
         
         if (emailError || lastnameError || firstnameError || passwordError){
             this.setState({emailError, lastnameError, firstnameError, passwordError});
-            this.hideSaveMessage();
+            // this.hideSaveMessage();
             return false;
         }
 
@@ -108,12 +112,13 @@ class Registration extends Component {
                 last_name: this.state.last_name,
                 email: this.state.email,
                 org: this.state.org,
-                passwd: this.state.passwd
+                passwd: this.state.passwd,
+                admin_flag: this.state.admin_flag
             }
 
             register(user).then(res => {
                 this.props.history.push(`/registration/`);
-                this.showSaveMessage();
+                //this.showSaveMessage();
             });
 
 
@@ -126,7 +131,9 @@ class Registration extends Component {
     }
 
     render () {
-		if (this.state.redirectTo) {
+        if (localStorage.getItem('is_admin') > 1) {
+            return <h4>You have no access to this page.</h4>
+        } else if (this.state.redirectTo) { 
 			return <Redirect to={this.state.redirectTo} />
         } else {
         return (
@@ -137,13 +144,13 @@ class Registration extends Component {
                     
                     <Form.Group controlId="formBasicFirstName">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control required name="first_name" type="text" placeholder="Enter first name" value={this.state.first_name} onChange={this.onChange} />
+                        <Form.Control required name="first_name" type="text" placeholder="Enter First Name" value={this.state.first_name} onChange={this.onChange} />
                         <Form.Text className="text-danger">{this.state.firstnameError}</Form.Text>
                     </Form.Group>
                     
                     <Form.Group controlId="formBasicLastName">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control required name="last_name" type="text" placeholder="Enter last name" value={this.state.last_name} onChange={this.onChange} />
+                        <Form.Control required name="last_name" type="text" placeholder="Enter Last Name" value={this.state.last_name} onChange={this.onChange} />
                         <Form.Text className="text-danger">{this.state.lastnameError}</Form.Text>
                     </Form.Group>
                     
@@ -154,7 +161,7 @@ class Registration extends Component {
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control required name="email" type="email" placeholder="Enter email" value={this.state.email} onChange={this.onChange} />
+                        <Form.Control required name="email" type="email" placeholder="Enter Email" value={this.state.email} onChange={this.onChange} />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
@@ -166,6 +173,23 @@ class Registration extends Component {
                         <Form.Control required name="passwd" type="password" placeholder="Password" value={this.state.passwd} onChange={this.onChange} />
                         <Form.Text className="text-danger">{this.state.passwordError}</Form.Text>
                     </Form.Group>
+
+                    <div className="form-group" id="adminFlag">
+                        <label>Role</label><br/>
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="radio" name="admin_flag" id="navigatorFlag" value="2" 
+                                onChange={this.onChange}
+                                checked={this.state.admin_flag === "2"} /> 
+                            <label className="form-check-label" htmlFor="navigatorFlag">Navigator</label>
+                        </div>
+
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="radio" name="admin_flag" id="administratorFlag" value="0" 
+                                onChange={this.onChange}
+                                checked={this.state.admin_flag === "0"} />
+                            <label className="form-check-label" htmlFor="administratorFlag">Administrator</label>
+                        </div>
+                    </div>
 
                     <Button type="submit" variant="primary">
                     Register
