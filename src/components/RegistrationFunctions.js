@@ -7,7 +7,8 @@ export const register = newUser => {
             last_name: newUser.last_name,
             org: newUser.org,
             email: newUser.email,
-            passwd: newUser.passwd
+            passwd: newUser.passwd,
+            admin_flag: newUser.admin_flag
         })
         .then(res => {
             console.log('User has been Registered')
