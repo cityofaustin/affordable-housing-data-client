@@ -32,6 +32,7 @@ class UpdateProperty extends Component {
 				'Contact Information',
 				'Communities Served',
 				'Affordability Information',
+				'Funding Information',
 				'Amenities',
 				'Schools',
 				// 'Unit Information'
