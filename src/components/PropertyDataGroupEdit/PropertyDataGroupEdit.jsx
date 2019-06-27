@@ -184,7 +184,7 @@ class PropertyDataGroupEdit extends Component {
 		}
 
 		function isTypeNum(dataType) {
-			if ((dataType.match(/^int.*/))||(dataType.match(/^float.*/))) {
+			if ((dataType.match(/^int.*/))||(dataType.match(/^decimal.*/))) {
 				return true;
 			} else {
 				return false;
