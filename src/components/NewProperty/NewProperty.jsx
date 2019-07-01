@@ -59,8 +59,11 @@ class NewProperty extends Component {
 		if (this.state && this.state.redirectTo) {
 			return <Redirect to={ this.state.redirectTo } />;
 		}
-
-		return (
+		
+		if (localStorage.getItem('is_admin') > 1) {
+			return <h4>&nbsp;&nbsp;Access Denied.</h4>
+		} else {
+			return (
 			<div className="container">
 				<h1>New Property</h1>
 				<div className='new-property-left'>
@@ -109,7 +112,7 @@ class NewProperty extends Component {
 				</div>
 			</div>
 		);
-	}
+	}}
 }
 
 export {NewProperty};
