@@ -62,7 +62,8 @@
 
 .asc {
 	width: 0; 
-  height: 0; 
+	height: 0; 
+	margin: 5px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   
@@ -73,6 +74,7 @@
 .desc {
   width: 0; 
   height: 0; 
+	margin: 5px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   

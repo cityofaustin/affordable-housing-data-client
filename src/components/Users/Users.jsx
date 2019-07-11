@@ -202,9 +202,6 @@ class Users extends Component {
     return (
 			<div className="container-fluid">
 				<div className="form-row">
-						<div className="form-group col-md-9">
-							<input onKeyUp={this.handleSearchKeyUp.bind(this)} className='form-control' type="text" id="table-search-input" placeholder="Search by ..." />
-						</div>
             <div className="form-group col-md-2">
               <select value={this.state.value} id='table-search-select' onChange={this.handleSearchSelectChange.bind(this)} className="form-control custom-select">
                 <option>Search Criteria...</option>
@@ -215,6 +212,10 @@ class Users extends Component {
                 <option>Role</option>
               </select>
             </div>
+            <div className="form-group col-md-1">&nbsp;</div>
+						<div className="form-group col-md-9">
+							<input onKeyUp={this.handleSearchKeyUp.bind(this)} className='form-control' type="text" id="table-search-input" placeholder="Search by ..." />
+						</div>
 				</div>
         
 				<br />
