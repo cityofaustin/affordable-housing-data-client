@@ -16,6 +16,8 @@ import {UpdateProperties} from './components/UpdateProperties/UpdateProperties.j
 import {UpdateProperty} from './components/UpdateProperty/UpdateProperty.jsx';
 import {PrivateRoute} from './components/PrivateRoute/PrivateRoute.jsx';
 import {NewProperty} from './components/NewProperty/NewProperty.jsx';
+import {Users} from './components/Users/Users.jsx';
+import {UpdateUser} from './components/UpdateUser/UpdateUser.jsx';
 import Navbar from './components/Navbar'
 
 debugLog(
@@ -44,6 +46,8 @@ class App extends Component {
               <PrivateRoute exact path="/update_property/:id" component={UpdateProperty} />
               <PrivateRoute exact path='/update_properties/' component={UpdateProperties} />
               <PrivateRoute exact path='/new_property/' component={NewProperty} />
+              <PrivateRoute exact path='/users/' component={Users} />
+              <PrivateRoute exact path="/update_user/" component={UpdateUser} />
               <Route component={Notfound} />
             </Switch>
           </div>
