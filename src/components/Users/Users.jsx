@@ -9,17 +9,16 @@ import axios from 'axios';
 import './Users.css';
 
 import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
+//import Button from 'react-bootstrap/Button'
 // import Form from 'react-bootstrap/Form';
 
 class Users extends Component {
 	constructor(props) {
     super(props);
     
-    
 		this.state = {
 			redirectTo: null,
-			searchBy: 'Name',
+			searchBy: 'First Name',
       value: 'first_name',
       data:[],
       sort: {
@@ -102,15 +101,6 @@ class Users extends Component {
     
     return className;
   };
-
-	handleUserClick(e) {
-		if (e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.Id) {
-			this.setState({
-				'redirectTo': '/update_user/' + e.currentTarget.dataset.Id
-			});
-		}
-
-  }
   
 	renderRole(p) {
     switch(p) {
@@ -138,12 +128,21 @@ class Users extends Component {
 					<td>{this.state.data[this_user].email}</td>
           <td> {this.state.data[this_user].org}</td>
           <td>{this.renderRole(this.state.data[this_user].admin_flag)}</td>
-					<td><button data-property-id={this.state.data[this_user].id} onClick={this.handleUserClick} className='table-view-btn btn-primary btn'>EDIT</button></td>
+					<td><button data-user-id={this.state.data[this_user].id} onClick={this.handleUserClick} className='table-view-btn btn-primary btn'>EDIT</button></td>
 				</tr>
 			);
     }}
 		return rows;
 	}
+
+
+	handleUserClick(e) {
+		if (e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.userId) {
+			this.setState({
+				'redirectTo': '/update_user/' + e.currentTarget.dataset.userId
+			});
+		}
+  }
 
 	handleSearchKeyUp() {
 		var searchBy = this.state.searchBy;

@@ -72,7 +72,7 @@ class UpdatePropertiesTable extends Component {
 
 		propertyData = _.sortBy(propertyData, 'total_income_restricted_units');
 		propertyData.reverse();
-		console.log(propertyData);
+
 		var rows = [];
 
 		for (var p of propertyData) {

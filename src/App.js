@@ -47,7 +47,7 @@ class App extends Component {
               <PrivateRoute exact path='/update_properties/' component={UpdateProperties} />
               <PrivateRoute exact path='/new_property/' component={NewProperty} />
               <PrivateRoute exact path='/users/' component={Users} />
-              <PrivateRoute exact path="/update_user/" component={UpdateUser} />
+              <PrivateRoute exact path="/update_user/:id" component={UpdateUser} />
               <Route component={Notfound} />
             </Switch>
           </div>
