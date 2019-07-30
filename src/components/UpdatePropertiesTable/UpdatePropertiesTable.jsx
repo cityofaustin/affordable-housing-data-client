@@ -80,7 +80,7 @@ class UpdatePropertiesTable extends Component {
 				<tr key={p.id}>
 					<td>{p.id}</td>
 					<td>{p.property_name} <br /> {p.address} <br />{p.city}, TX {p.zipcode}</td>
-					<td>{p.total_income_restricted_units ? p.total_income_restricted_units : <span className='text-danger'>unknown</span>}</td>
+					<td>{(typeof(p.total_income_restricted_units)=== 'number') ? p.total_income_restricted_units : <span className='text-danger'>unknown</span>}</td>
 					<td>{p.phone}</td>
 					<td>{this.renderDataSources(p)}</td>
 					<td>{this.renderFundingSources(p)}</td>
