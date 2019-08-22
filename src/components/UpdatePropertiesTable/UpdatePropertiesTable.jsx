@@ -63,7 +63,7 @@ class UpdatePropertiesTable extends Component {
 	}
 
 	renderFundingSources(p) {
-		var elem = <span>{p.funding_source_nhcd ? 'NHCD' : ''} {p.funding_source_tdhca ? 'TDHCA' : ''} {p.funding_source_aahc ? 'HACA' : ''} {p.funding_source_hatc ? 'HATC' : ''}</span>
+		var elem = <span>{p.funding_source_nhcd ? 'NHCD' : ''} {p.funding_source_tdhca ? 'TDHCA' : ''} {p.funding_source_haca ? 'HACA' : ''} {p.funding_source_hatc ? 'HATC' : ''}</span>
 		return elem;
 	}
 

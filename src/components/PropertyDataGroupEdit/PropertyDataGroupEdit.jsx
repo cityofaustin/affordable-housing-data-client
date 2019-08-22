@@ -55,6 +55,7 @@ class PropertyDataGroupEdit extends Component {
 			value: e.target.value,
 			// verify: null
 		}
+		console.log(updateData);
 		this.props.handleUpdateData(updateData);
 		this.props.data[field].value = e.target.value;
 
@@ -240,7 +241,20 @@ class PropertyDataGroupEdit extends Component {
 			if (isTypeText(dataType) || isTypeNum(dataType)) {
 				return (
 					<div className='form-group'>
+					{field === 'unit_type' && 
+					<span><p>Current Unit Type: <b>"{(value || value === 0) ? value : ''}"</b></p>
+						<select size="1" readOnly={!isEditable} className='form-control text-or-num-input' id={field} defaultValue={(value || value === 0) ? value : ''} onChange={this.onInputChange.bind(this, field)}>
+							<option value="" disabled={!isEditable}></option>
+							<option value="ADU" disabled={!isEditable}>ADU</option>
+							<option value="Single Family" disabled={!isEditable}>Single Family</option>
+							<option value="Duplex" disabled={!isEditable}>Duplex</option>
+							<option value="Fourplex" disabled={!isEditable}>Fourplex</option>
+							<option value="Multifamily" disabled={!isEditable}>Multifamily</option>
+						</select></span>
+					}
+					{field !== 'unit_type' && 
 						<input type={isTypeText(dataType) ? 'text' : 'number'} readOnly={!isEditable} className='form-control text-or-num-input' id={field} defaultValue={(value || value === 0) ? value : ''} onChange={this.onInputChange.bind(this, field)} />
+					}
 					{ (field !== 'id' && isEditable) &&
 						/* exclude verify button from id */
 						<span>
