@@ -375,7 +375,7 @@ class UpdateProperty extends Component {
 								<Card.Header>What data is 'Tenant Criteria'?</Card.Header>
 								<Card.Body>
 									<ul>
-										<li>accepts section 8</li>
+										<li>accepts Housing Choice</li>
 										<li>has available units</li>
 										<li>only serves students</li>
 										<li>only serves elderly</li>
