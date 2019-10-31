@@ -63,7 +63,7 @@ class NavBar extends Component {
                     <Link to="/registration" className="nav-link">Registration</Link>
                 </li> : ""
                 }
-                { (localStorage.getItem('is_admin') == 1) ?
+                { (localStorage.getItem('is_admin') === '1') ?
                 <li className="nav-item">
                     <Link to="/users" className="nav-link">Users</Link>
                 </li> : ""

@@ -193,7 +193,7 @@ class Users extends Component {
   }
   
 	render() {
-    if ((localStorage.getItem('is_admin') != 1) ||(! localStorage.getItem('is_admin'))) {
+    if ((localStorage.getItem('is_admin') !== '1') ||(! localStorage.getItem('is_admin'))) {
         return <h4>&nbsp;&nbsp;Access Denied.</h4>
     } else if (this.state && this.state.redirectTo) { 
   return <Redirect to={this.state.redirectTo} />;

@@ -401,7 +401,7 @@ class UpdateProperty extends Component {
 		else {
 			return (
 			<div>
-				
+				Property Not Found.
 			</div>)
 		}
 		//return <div></div>

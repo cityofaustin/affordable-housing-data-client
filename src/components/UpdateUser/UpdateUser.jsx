@@ -10,64 +10,73 @@ import Form from 'react-bootstrap/Form';
 import './UpdateUser.css';
 // import Nav from 'react-bootstrap/Nav';
 
-
-const initalState = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  org: '',
-  passwd: '',
-  admin_flag: '2',
-  lastnameError: '',
-  firstnameError: '',
-  emailError: '',
-  passwordError: '',
-  data:{
-
-  }
-}
-
 class UpdateUser extends Component {
   constructor(props) {
       super(props);
-      this.state = initalState;
-      this.onChange = this.onChange.bind(this);
+      //this.state = initalState;
+      this.state = {
+          data: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            org: '',
+            admin_flag: '2',
+            passwd: ''
+          },
+          updatedUserData: {
+
+          }
+      }
+      //this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
+      this.handleUpdateUserData = this.handleUpdateUserData.bind(this);
       var userId = this.props.match.params.id;
       var queryString = `/get_user_byID?userId=${userId}`;
       axios.get(queryString)
         .then((res) => {
-          //console.log('what is res');
-          //console.log(res.data.data);
           this.setState({'data': res.data.data});
+          //console.log(this.state.data);
+          //console.log(this.state.updatedUserData);
         })
         .catch((e) => {
-          //console.log('inside catch');
-          //console.log(e);
-          //console.log(e.response);
           if (e && e.response && !e.response.data.success && e.response.data.redirect) {
             this.setState({redirectTo: '/'});
           }
-        });
-  }
+        });      
+  };
 
+  handleUpdateUserData(data) {
+    if (typeof(data.value) === "string" && data.value.trim().length === 0) {
+        //this.setState(Object.assign(this.state.updatedUserData,{[data.field]:null}));
+        this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:null}}));
+    } else {
+        //this.setState(Object.assign(this.state.updatedUserData,{[data.field]:data.value}));
+        this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:data.value}}));
+    }
+    console.log(this.state.updatedUserData);
+}
+
+  onInputChange(field, e) {
+    var updateuserdata = {
+        field: field,
+        value: e.target.value,
+    }
+    this.handleUpdateUserData(updateuserdata);
+    this.setState(Object.assign(this.state.data,{[field]:e.target.value}));
+}
+/*
   onChange (e) {
-      const target = e.target;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
-      const name = target.name;
-
-      //const isCheckbox = e.target.type === "checkbox"
-      this.setState({ 
-          [name]: value 
-      })
-      console.log(target);
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+	this.setState(Object.assign(this.state.updatedUserData,{[name]:{value:value}}));
   }
-
+*/
   validate = () => {
       let lastnameError= '';
       let firstnameError= '';
       let emailError= '';
-      let passwordError= ''; 
+      let orgError= '';
 
       if (!this.state.first_name){
           firstnameError='Invalid First Name'
@@ -75,17 +84,16 @@ class UpdateUser extends Component {
       if (!this.state.last_name){
           lastnameError='Invalid Last Name'
       }
-      if (!this.state.email.includes('@')){
+      if (!this.state.email || !this.state.email.includes('@')){
           emailError='Invalid Email'
       }
-      if (!this.state.passwd){
-          passwordError='Invalid Password'
+      if (!this.state.org){
+          orgError='Invalid Organization'
       }
 
       
-      if (emailError || lastnameError || firstnameError || passwordError){
-          this.setState({emailError, lastnameError, firstnameError, passwordError});
-          // this.hideSaveMessage();
+      this.setState({emailError, lastnameError, firstnameError, orgError});
+      if (emailError || lastnameError || firstnameError || orgError){
           return false;
       }
 
@@ -107,40 +115,37 @@ class UpdateUser extends Component {
       const isValid = this.validate()
 
       if (isValid){
-          //console.log(this.state)
-          toast.success('User has been registered.')
-          /*
-          const user = {
-              first_name: this.state.first_name,
-              last_name: this.state.last_name,
-              email: this.state.email,
-              org: this.state.org,
-              passwd: this.state.passwd,
-              admin_flag: this.state.admin_flag
-          }
-          */
-          /*
-          register(user).then(res => {
-              this.props.history.push(`/registration/`);
-              //this.showSaveMessage();
-          });
+        //console.log(this.state);
 
-          */
-          //clear form
-          this.setState(initalState);
-     
+        
+		axios.post(
+			`/update_user?userEmail=${localStorage.getItem('email')}`,
+			{
+				updatedUserData: this.state.updatedUserData,
+				userId: this.props.match.params.id
+			})
+			.then((res) => {
+                this.setState(Object.assign(this.state.updatedUserData,{}));
+                //this.setState({updatedUserData:{}}); //SAVE successfully. Now cleanup variable that holds updated data.
+                //console.log(this.state.updatedUserData);
+                toast.success('User record has been updated.');
+                this.showSaveMessage();
+			})
+			.catch((e) => {
+				this.showFailureMessage();
+			});
       }
-
-
   }
 
   render () {
       if ((localStorage.getItem('is_admin') > 1) ||(localStorage.getItem('is_admin') === null)) {
           return <h4>&nbsp;&nbsp;Access Denied.</h4>
-      } else if (this.state && this.state.redirectTo) { 
-    return <Redirect to={this.state.redirectTo} />;
-      } else {
-      return (
+      } 
+      else if (this.state && this.state.redirectTo) { 
+        return <Redirect to={this.state.redirectTo} />;
+      } 
+      else if (this.state.data !== undefined) {
+        return (
           <div className="container">
               
               <h1>Edit User</h1>
@@ -148,24 +153,25 @@ class UpdateUser extends Component {
                   
                   <Form.Group controlId="formBasicFirstName">
                       <Form.Label>First Name</Form.Label>
-                      <Form.Control required name="first_name" type="text" placeholder="Enter First Name" value={this.state.first_name} onChange={this.onChange} />
+                      <Form.Control required name="first_name" type="text" placeholder="Enter First Name" value={this.state.data.first_name || ''} onChange={this.onInputChange.bind(this, 'first_name')} />
                       <Form.Text className="text-danger">{this.state.firstnameError}</Form.Text>
                   </Form.Group>
                   
                   <Form.Group controlId="formBasicLastName">
                       <Form.Label>Last Name</Form.Label>
-                      <Form.Control required name="last_name" type="text" placeholder="Enter Last Name" value={this.state.data.last_name || this.state.last_name} onChange={this.onChange} />
+                      <Form.Control required name="last_name" type="text" placeholder="Enter Last Name" value={this.state.data.last_name || ''} onChange={this.onInputChange.bind(this, 'last_name')} />
                       <Form.Text className="text-danger">{this.state.lastnameError}</Form.Text>
                   </Form.Group>
                   
                   <Form.Group controlId="formBasicOrganization">
                       <Form.Label>Organization</Form.Label>
-                      <Form.Control name="org"  type="text" placeholder="Enter Organization Name" value={this.state.data.org || this.state.org} onChange={this.onChange} />
+                      <Form.Control name="org"  type="text" placeholder="Enter Organization Name" value={this.state.data.org || ''} onChange={this.onInputChange.bind(this, 'org')} />
+                      <Form.Text className="text-danger">{this.state.orgError}</Form.Text>
                   </Form.Group>
 
                   <Form.Group controlId="formBasicEmail">
                       <Form.Label>Email address</Form.Label>
-                      <Form.Control required name="email" type="email" placeholder="Enter Email" value={this.state.data.email || this.state.email} onChange={this.onChange} />
+                      <Form.Control required name="email" type="email" placeholder="Enter Email" value={this.state.data.email  || ''} onChange={this.onInputChange.bind(this, 'email')} />
                       <Form.Text className="text-muted">
                           We'll never share your email with anyone else.
                       </Form.Text>
@@ -176,27 +182,29 @@ class UpdateUser extends Component {
                       <label>Role</label><br/>
                       <div className="form-check form-check-inline">
                           <input className="form-check-input" type="radio" name="admin_flag" id="navigatorFlag" value="2" 
-                              onChange={this.onChange}
-                              checked={this.state.data.admin_flag == "2"} /> 
-                          <label className="form-check-label" htmlFor="navigatorFlag">Navigator</label>
-                      </div>
+                              onChange={this.onInputChange.bind(this, 'admin_flag')}
+                              defaultChecked={this.state.data.admin_flag === 2 ? true : false} /> 
+                          <label className="form-check-label" htmlFor="navigatorFlag">Navigator</label>&nbsp;&nbsp;
 
-                      <div className="form-check form-check-inline">
                           <input className="form-check-input" type="radio" name="admin_flag" id="administratorFlag" value="0" 
-                              onChange={this.onChange}
-                              checked={this.state.data.admin_flag == "0"} />
-                          <label className="form-check-label" htmlFor="administratorFlag">Administrator</label>
-                      </div>
-
-                      
-
-                      <div className="form-check form-check-inline">
-                          <input className="form-check-input" type="radio" name="admin_flag" id="administratorFlag" value="0" 
-                              onChange={this.onChange}
-                              checked={this.state.data.admin_flag == "1"} />
+                              onChange={this.onInputChange.bind(this, 'admin_flag')}
+                              defaultChecked={this.state.data.admin_flag === 0 ? true : false} />
+                          <label className="form-check-label" htmlFor="administratorFlag">Administrator</label>&nbsp;&nbsp;
+                          
+                          <input className="form-check-input" type="radio" name="admin_flag" id="administratorFlag" value="1" 
+                              onChange={this.onInputChange.bind(this, 'admin_flag')}
+                              defaultChecked={this.state.data.admin_flag === 1 ? true : false} />
                           <label className="form-check-label" htmlFor="administratorFlag">Super Administrator</label>
                       </div>
                   </div>
+
+                  <Form.Group controlId="formBasicPassword">
+                      <Form.Label>New Password</Form.Label>
+                      <Form.Control name="passwd"  type="password" placeholder="Enter New Password. Leave as is if you want to keep current password." value={this.state.data.passwd || ''} onChange={this.onInputChange.bind(this, 'passwd')} />
+                      <Form.Text className="text-muted">
+                      Only fill in this field if you want to CHANGE password
+                      </Form.Text>
+                  </Form.Group>
 
                   <Button type="submit" variant="primary">
                   Update
@@ -207,7 +215,13 @@ class UpdateUser extends Component {
               </Form>
           </div>
       )
-  }}
+  }
+  else  {
+    return (
+    <div>
+        User Not Found.
+    </div>)
+ }}
 }
 
 export {UpdateUser};
