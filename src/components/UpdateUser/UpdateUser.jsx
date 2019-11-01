@@ -53,7 +53,7 @@ class UpdateUser extends Component {
         //this.setState(Object.assign(this.state.updatedUserData,{[data.field]:data.value}));
         this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:data.value}}));
     }
-    console.log(this.state.updatedUserData);
+    //console.log(this.state.updatedUserData);
 }
 
   onInputChange(field, e) {
@@ -78,19 +78,19 @@ class UpdateUser extends Component {
       let emailError= '';
       let orgError= '';
 
-      if (!this.state.first_name){
+      if (!this.state.first_name || this.state.first_name.trim()===''){
           firstnameError='Invalid First Name'
       }
-      if (!this.state.last_name){
+      if (!this.state.last_name || this.state.last_name.trim()===''){
           lastnameError='Invalid Last Name'
       }
       if (!this.state.email || !this.state.email.includes('@')){
           emailError='Invalid Email'
       }
-      if (!this.state.org){
+      if (!this.state.org  || this.state.org.trim()===''){
           orgError='Invalid Organization'
       }
-
+      //console.log(this.state.updatedUserData);
       
       this.setState({emailError, lastnameError, firstnameError, orgError});
       if (emailError || lastnameError || firstnameError || orgError){
