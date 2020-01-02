@@ -1,19 +1,16 @@
 // react
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-// axios
 import axios from 'axios';
 //import _ from "underscore";
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './UpdateUser.css';
-// import Nav from 'react-bootstrap/Nav';
 
 class UpdateUser extends Component {
   constructor(props) {
       super(props);
-      //this.state = initalState;
       this.state = {
           data: {
             first_name: '',
@@ -27,7 +24,6 @@ class UpdateUser extends Component {
 
           }
       }
-      //this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
       this.handleUpdateUserData = this.handleUpdateUserData.bind(this);
       var userId = this.props.match.params.id;
@@ -35,8 +31,6 @@ class UpdateUser extends Component {
       axios.get(queryString)
         .then((res) => {
           this.setState({'data': res.data.data});
-          //console.log(this.state.data);
-          //console.log(this.state.updatedUserData);
         })
         .catch((e) => {
           if (e && e.response && !e.response.data.success && e.response.data.redirect) {
@@ -47,56 +41,54 @@ class UpdateUser extends Component {
 
   handleUpdateUserData(data) {
     if (typeof(data.value) === "string" && data.value.trim().length === 0) {
-        //this.setState(Object.assign(this.state.updatedUserData,{[data.field]:null}));
+        if (data.field === "passwd") {
+            this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:undefined}}));
+        } else {
         this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:null}}));
+        }
     } else {
-        //this.setState(Object.assign(this.state.updatedUserData,{[data.field]:data.value}));
         this.setState(Object.assign(this.state.updatedUserData,{[data.field]:{value:data.value}}));
     }
-    //console.log(this.state.updatedUserData);
-}
+  }
 
   onInputChange(field, e) {
-    var updateuserdata = {
+    var ChangedData = {
         field: field,
         value: e.target.value,
     }
-    this.handleUpdateUserData(updateuserdata);
+    this.handleUpdateUserData(ChangedData);
     this.setState(Object.assign(this.state.data,{[field]:e.target.value}));
-}
-/*
-  onChange (e) {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-	this.setState(Object.assign(this.state.updatedUserData,{[name]:{value:value}}));
   }
-*/
   validate = () => {
       let lastnameError= '';
       let firstnameError= '';
       let emailError= '';
       let orgError= '';
-
-      if (!this.state.first_name || this.state.first_name.trim()===''){
-          firstnameError='Invalid First Name'
-      }
-      if (!this.state.last_name || this.state.last_name.trim()===''){
-          lastnameError='Invalid Last Name'
-      }
-      if (!this.state.email || !this.state.email.includes('@')){
-          emailError='Invalid Email'
-      }
-      if (!this.state.org  || this.state.org.trim()===''){
-          orgError='Invalid Organization'
-      }
       //console.log(this.state.updatedUserData);
-      
-      this.setState({emailError, lastnameError, firstnameError, orgError});
-      if (emailError || lastnameError || firstnameError || orgError){
+      if (Object.keys(this.state.updatedUserData).length === 0) {
+        return false;
+      } else if (Object.keys(this.state.updatedUserData).length === 1 && Object.keys(this.state.updatedUserData)[0] === 'passwd' && this.state.updatedUserData['passwd'].value === undefined)  {
+          console.log("Invalid New Password.");
           return false;
+      } else {
+        if (!this.state.first_name || this.state.first_name.trim()===''){
+            firstnameError='Invalid First Name'
+        }
+        if (!this.state.last_name || this.state.last_name.trim()===''){
+            lastnameError='Invalid Last Name'
+        }
+        if (!this.state.email || !this.state.email.includes('@')){
+            emailError='Invalid Email'
+        }
+        if (!this.state.org  || this.state.org.trim()===''){
+            orgError='Invalid Organization'
+        }
+        
+        this.setState({emailError, lastnameError, firstnameError, orgError});
+        if (emailError || lastnameError || firstnameError || orgError){
+            return false;
+        }
       }
-
       return true;
   }
 
@@ -115,8 +107,6 @@ class UpdateUser extends Component {
       const isValid = this.validate()
 
       if (isValid){
-        //console.log(this.state);
-
         
 		axios.post(
 			`/update_user?userEmail=${localStorage.getItem('email')}`,
@@ -127,7 +117,6 @@ class UpdateUser extends Component {
 			.then((res) => {
                 this.setState(Object.assign(this.state.updatedUserData,{}));
                 //this.setState({updatedUserData:{}}); //SAVE successfully. Now cleanup variable that holds updated data.
-                //console.log(this.state.updatedUserData);
                 toast.success('User record has been updated.');
                 this.showSaveMessage();
 			})
@@ -179,7 +168,7 @@ class UpdateUser extends Component {
                   </Form.Group>
                   
                   <div className="form-group" id="adminFlag">
-                      <label>Role</label><br/>
+                      <label>Role&nbsp;&nbsp;&nbsp;&nbsp;</label>
                       <div className="form-check form-check-inline">
                           <input className="form-check-input" type="radio" name="admin_flag" id="navigatorFlag" value="2" 
                               onChange={this.onInputChange.bind(this, 'admin_flag')}
@@ -199,10 +188,10 @@ class UpdateUser extends Component {
                   </div>
 
                   <Form.Group controlId="formBasicPassword">
-                      <Form.Label>New Password</Form.Label>
-                      <Form.Control name="passwd"  type="password" placeholder="Enter New Password. Leave as is if you want to keep current password." value={this.state.data.passwd || ''} onChange={this.onInputChange.bind(this, 'passwd')} />
-                      <Form.Text className="text-muted">
-                      Only fill in this field if you want to CHANGE password
+                      <Form.Label>New Password *</Form.Label>
+                      <Form.Control name="passwd"  type="password" placeholder="Leave as is if you want to keep current password." value={this.state.data.passwd || ''} onChange={this.onInputChange.bind(this, 'passwd')} />
+                      <Form.Text className="text-danger">
+                      * Only fill in this field if you want to CHANGE password
                       </Form.Text>
                   </Form.Group>
 
