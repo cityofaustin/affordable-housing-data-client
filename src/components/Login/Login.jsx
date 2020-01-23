@@ -26,11 +26,21 @@ class Login extends Component {
 		e.preventDefault(); // prevent form submit
 
 		var email = document.getElementById('email_login').value;
+		var myEle = document.getElementById("g-recaptcha-response");
+    if(myEle){
+        var recaptcha= myEle.value;
+    }
+		//var recaptcha = document.getElementById('g-recaptcha-response').value;
+		var pass = document.getElementById('email_pass').value;
+		if ((myEle && recaptcha=="") || email =="" || pass=="") {
+			var elem = document.getElementById('captcha_error_msg');
+			elem.style.display = 'block';
+		} else {
 		var postData = {
 			email: email,
-			pass: document.getElementById('email_pass').value
+			pass: pass,
+			recaptcha: recaptcha
 		};
-
 		axios.post(
 			'/login',
 			postData
@@ -63,7 +73,7 @@ class Login extends Component {
 				);
 			}
 		});
-	}
+	}}
 
 	render() {
 		const { from } = {from: {pathname: '/update_properties'}};
@@ -86,7 +96,10 @@ class Login extends Component {
 						<br/>
 						<div className='login-form-container'>
 							<div>
-								<form className='form-group'>
+								<form className='form-group' method="POST">
+								<div id='captcha_error_msg'>Please fill all fields.</div>
+								<div id='login_failed_msg'>Login failed. Username and password combination is incorrect.</div>
+								<div id='login_error_msg'>Login failed. Please contact system adminstrator for details.</div>
 									<span>Email</span>
 									<br/>
 									<input id='email_login' className='login_input form-control' autoComplete='on'></input>
@@ -95,11 +108,10 @@ class Login extends Component {
 									<br/>
 									<input id='email_pass' className='login_input form-control' type='password' autoComplete='on'></input>
 									<br/>
-									<button className='btn btn-primary btn-login' onClick={this.handleLogin}>Login</button>
-								</form>
-							</div>
-							<div id='login_failed_msg'>Login failed. Username and password combination is incorrect.</div>
-							<div id='login_error_msg'>Login failed. Please contact system adminstrator for details.</div>
+									<div class="g-recaptcha" data-sitekey="6Lekd9EUAAAAAHUUq4MWQ1amMYQuZCGnHyQeiPwe"></div>
+									<button id='btn-login' className='btn btn-primary btn-login' onClick={this.handleLogin}>Login</button>
+							</form>
+						</div>
 						</div>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-#login_failed_msg, #login_error_msg {
+#login_failed_msg, #login_error_msg, #captcha_error_msg {
 	display: none;
 	color: red;
 }
