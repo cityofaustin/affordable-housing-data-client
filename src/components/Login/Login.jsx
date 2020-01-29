@@ -108,7 +108,9 @@ class Login extends Component {
 									<br/>
 									<input id='email_pass' className='login_input form-control' type='password' autoComplete='on'></input>
 									<br/>
-									<div class="g-recaptcha" data-sitekey="6Lekd9EUAAAAAHUUq4MWQ1amMYQuZCGnHyQeiPwe"></div>
+									<div id='g-recaptcha'></div>
+									<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+									</script>
 									<button id='btn-login' className='btn btn-primary btn-login' onClick={this.handleLogin}>Login</button>
 							</form>
 						</div>
