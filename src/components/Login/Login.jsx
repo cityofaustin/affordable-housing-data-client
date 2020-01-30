@@ -32,7 +32,7 @@ class Login extends Component {
     }
 		//var recaptcha = document.getElementById('g-recaptcha-response').value;
 		var pass = document.getElementById('email_pass').value;
-		if ((myEle && recaptcha=="") || email =="" || pass=="") {
+		if ((myEle && recaptcha==="") || email ==="" || pass==="") {
 			var elem = document.getElementById('captcha_error_msg');
 			elem.style.display = 'block';
 		} else {

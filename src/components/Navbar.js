@@ -52,7 +52,8 @@ class NavBar extends Component {
         localStorage.removeItem('isLoggedIn')
         localStorage.removeItem('email')
         localStorage.removeItem('is_admin')
-        window.location.reload()
+        //window.location.reload()
+        window.location.assign(window.location.origin)
         //this.props.history.push('/')
     }
 
@@ -62,7 +63,7 @@ class NavBar extends Component {
         const loginRegLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link href="" className="nav-link">Home</Link>
+                    <Link href="/" className="nav-link">Home</Link>
                 </li>
             </ul>
         )
