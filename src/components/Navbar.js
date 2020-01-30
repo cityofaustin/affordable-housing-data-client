@@ -62,8 +62,8 @@ class NavBar extends Component {
         
         const loginRegLink = (
             <ul className="navbar-nav">
-                <li className="nav-item">
-                    <Link href="/" className="nav-link">Home</Link>
+                <li className="nav-item active">
+                    <Link href="/" className="nav-link">Login</Link>
                 </li>
             </ul>
         )
