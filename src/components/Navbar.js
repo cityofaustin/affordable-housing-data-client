@@ -36,11 +36,25 @@ class NavBar extends Component {
     
     logOut(e) {
         e.preventDefault()
+        //console.log(localStorage)
+		axios
+        .post('/logout',{
+            email:localStorage.getItem('email')
+        })
+        .then((res) => {
+            // remove local storage 
+            localStorage.clear()
+            this.setState({
+                'redirectTo': '/'
+            });
+        })
         localStorage.removeItem('usertoken')
         localStorage.removeItem('isLoggedIn')
         localStorage.removeItem('email')
         localStorage.removeItem('is_admin')
-        this.props.history.push('/')
+        //window.location.reload()
+        window.location.assign(window.location.origin)
+        //this.props.history.push('/')
     }
 
     
@@ -48,8 +62,8 @@ class NavBar extends Component {
         
         const loginRegLink = (
             <ul className="navbar-nav">
-                <li className="nav-item">
-                    <Link to="/" className="nav-link">Home</Link>
+                <li className="nav-item active">
+                    <Link href="/" className="nav-link">Login</Link>
                 </li>
             </ul>
         )

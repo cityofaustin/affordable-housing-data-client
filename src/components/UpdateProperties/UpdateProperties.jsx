@@ -24,11 +24,11 @@ class UpdateProperties extends Component {
 		var queryString = '/update_properties_list?userEmail=' + email;
 		axios.get(queryString)
 			.then((res) => {
-				console.log(res);
+				//console.log(res);
 				this.setState({data: res.data.data, showUpdateProperties: true});
 			})
 			.catch((e) => {
-				console.log(e.response);
+				//console.log(e.response);
 				// if not authorized, we want to redirect to login page
 				if (e && e.response && !e.response.data.success && e.response.data.redirect) {
 					this.setState({redirectTo: '/'});
