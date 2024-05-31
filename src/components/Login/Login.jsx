@@ -1,6 +1,6 @@
 // react
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 // axios
 import axios from 'axios';
 // import API from '../Api';
@@ -70,7 +70,7 @@ class Login extends Component {
 		const { redirectToReferrer } = this.state;
 
 		if (redirectToReferrer === true) {
-			return <Redirect to={from} />
+			return <Navigate to={from} />
 		}
 
 		return(

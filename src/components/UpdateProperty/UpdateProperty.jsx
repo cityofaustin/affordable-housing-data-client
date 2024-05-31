@@ -1,6 +1,6 @@
 // react
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 // axios
 import axios from 'axios';
 // import API from '../Api';
@@ -286,7 +286,7 @@ class UpdateProperty extends Component {
 
 	render() {
 		if (this.state.redirectTo) {
-			return (<Redirect to={this.state.redirectTo} />);
+			return (<Navigate to={this.state.redirectTo} />);
 		}
 		if (this.state.showUpdateProperty) {
 			return (

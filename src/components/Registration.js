@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { register } from './RegistrationFunctions';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -134,7 +134,7 @@ class Registration extends Component {
         if ((localStorage.getItem('is_admin') > 1) ||(localStorage.getItem('is_admin') === null)) {
             return <h4>&nbsp;&nbsp;Access Denied.</h4>
         } else if (this.state && this.state.redirectTo) { 
-			return <Redirect to={this.state.redirectTo} />;
+			return <Navigate to={this.state.redirectTo} />;
         } else {
         return (
             <div className="container">

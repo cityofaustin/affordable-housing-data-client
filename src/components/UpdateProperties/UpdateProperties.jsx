@@ -1,7 +1,7 @@
 // react libraries
 import React, { Component } from 'react';
 import {
-	Redirect
+	Navigate
 } from 'react-router-dom';
 // axios
 import axios from 'axios';
@@ -39,7 +39,7 @@ class UpdateProperties extends Component {
 
 	render() {
 		if (this.state.redirectTo) {
-			return <Redirect to={this.state.redirectTo} />
+			return <Navigate to={this.state.redirectTo} />
 		}
 		if (this.state.showUpdateProperties) {
 			return (

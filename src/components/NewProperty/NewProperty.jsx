@@ -1,6 +1,6 @@
 // react
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 // libs
 // import _ from "underscore";
 // axios
@@ -57,7 +57,7 @@ class NewProperty extends Component {
 
 	render() {
 		if (this.state && this.state.redirectTo) {
-			return <Redirect to={ this.state.redirectTo } />;
+			return <Navigate to={ this.state.redirectTo } />;
 		}
 		
 		if (localStorage.getItem('is_admin') > 1) {
