@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -38,14 +38,16 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <ToastContainer autoClose={5000} />
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/registration/" component={Registration} />
-              <PrivateRoute exact path="/update_property/:id" component={UpdateProperty} />
-              <PrivateRoute exact path='/update_properties/' component={UpdateProperties} />
-              <PrivateRoute exact path='/new_property/' component={NewProperty} />
-              <Route component={Notfound} />
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/registration/" element={<Registration />} />
+              <Route element={<PrivateRoute/>}>
+                <Route path="/update_property/:id" element={ <UpdateProperty />} />
+                <Route path='/update_properties/' element={ <UpdateProperties />} />
+                <Route path='/new_property/' element={ <NewProperty />} />
+              </Route>
+              <Route element={<Notfound />} />
+            </Routes>
           </div>
         </Router>
     );
