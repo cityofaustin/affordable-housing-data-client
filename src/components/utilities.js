@@ -4,10 +4,10 @@ import axios from "axios";
 function logEvent(data) {
     axios.post("/log_event", data)
         .then(function(response) {
-
+            console.log(response);
         })
         .catch(function(error) {
-
+            console.log(error);
         });
 }
 
