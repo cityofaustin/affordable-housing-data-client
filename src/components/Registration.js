@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { register } from './RegistrationFunctions';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -21,6 +21,20 @@ const initalState = {
     passwordError: ''
 }
 
+const withRouter = WrappedComponent => props => {
+  const params = useParams();
+  const navigate = useNavigate();
+  // etc... other react-router-dom v6 hooks
+
+  return (
+    <WrappedComponent
+      navigate = { navigate}
+      {...props}
+      // etc...
+    />
+  );
+};
+
 class Registration extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +44,7 @@ class Registration extends Component {
 
         var email = localStorage.getItem('email');
         var queryString = '/checkuser?userEmail=' + email;
-	    axios.get(queryString)
+        axios.get(queryString)
             .then((res) => {//should always return 200, check success value to determine action.
                 if (res &&  !res.data.success && res.data.redirect) {
                     localStorage.clear();
@@ -104,7 +118,7 @@ class Registration extends Component {
         const isValid = this.validate()
 
         if (isValid){
-            //console.log(this.state)
+            // console.log(this.state)
             toast.success('User has been registered.')
 
             const user = {
@@ -117,7 +131,7 @@ class Registration extends Component {
             }
 
             register(user).then(res => {
-                this.props.history.push(`/registration/`);
+                this.props.navigate(`/registration/`);
                 //this.showSaveMessage();
             });
 
@@ -134,7 +148,7 @@ class Registration extends Component {
         if ((localStorage.getItem('is_admin') > 1) ||(localStorage.getItem('is_admin') === null)) {
             return <h4>&nbsp;&nbsp;Access Denied.</h4>
         } else if (this.state && this.state.redirectTo) { 
-			return <Navigate to={this.state.redirectTo} />;
+            return <Navigate to={this.state.redirectTo} />;
         } else {
         return (
             <div className="container">
@@ -203,5 +217,5 @@ class Registration extends Component {
     }}
 }
 
-export { Registration };
+export default withRouter(Registration);
 //export default Registration
