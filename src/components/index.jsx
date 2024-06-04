@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 // other packages
 import _ from "underscore";
@@ -26,14 +26,14 @@ debugLog(
     }
 );
 
-ReactDOM.render((
-    <BrowserRouter>
+const container = document.getElementById('container');
+const root = createRoot(container);
+root.render(<BrowserRouter>
         <Switch>
             <Route exact path="/" component={Login} />
             <PrivateRoute exact path="/update_property/:id" component={UpdateProperty} />
             <PrivateRoute exact path='/update_properties' component={UpdateProperties} />
             <PrivateRoute exact path='/new_property' component={NewProperty} />
         </Switch>
-    </BrowserRouter>
-), document.getElementById('container'));
+    </BrowserRouter>);
 

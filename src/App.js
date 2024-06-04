@@ -10,10 +10,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import { debugLog } from './components/utilities';
 
 import {Login} from './components/Login/Login'
-import {Registration} from './components/Registration'
+import Registration from './components/Registration'
 import Notfound from './components/notfound'
 import {UpdateProperties} from './components/UpdateProperties/UpdateProperties.jsx';
-import {UpdateProperty} from './components/UpdateProperty/UpdateProperty.jsx';
+import UpdateProperty from './components/UpdateProperty/UpdateProperty.jsx';
 import {PrivateRoute} from './components/PrivateRoute/PrivateRoute.jsx';
 import {NewProperty} from './components/NewProperty/NewProperty.jsx';
 import Navbar from './components/Navbar'
@@ -29,7 +29,7 @@ debugLog(
   }
 );
 
-
+// Upgrade from react-router-dom V5: https://web.archive.org/web/20211208071534/https://reactrouter.com/docs/en/v6/upgrading/v5
 
 class App extends Component {
   render() {

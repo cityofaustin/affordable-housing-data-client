@@ -1,6 +1,6 @@
 // react
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 // axios
 import axios from 'axios';
 // import API from '../Api';
@@ -20,10 +20,24 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col' 
 import Card from 'react-bootstrap/Card'
 
+const withRouter = WrappedComponent => props => {
+  const params = useParams();
+  // etc... other react-router-dom v6 hooks
+
+  return (
+    <WrappedComponent
+      {...props}
+      params={params}
+      // etc...
+    />
+  );
+};
+
 class UpdateProperty extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			id: this.props.params.id,
 			redirectTo: null,
 			showUpdateProperty: false,
 			showEditProperty: false,
@@ -49,18 +63,19 @@ class UpdateProperty extends Component {
 		this.handleUpdateData = this.handleUpdateData.bind(this);
 		this.updateVerifications = this.updateVerifications.bind(this);
 
-		var propertyId = this.props.match.params.id;
+		var propertyId = this.state.id;
 		var queryString = `/property?propertyId=${propertyId}&userEmail=${localStorage.getItem('email')}`;
+
 		axios.get(queryString)
 			.then((res) => {
 				//console.log('what is res');
-				//console.log(res);
+				console.log(res);
 				this.setState({'data': res.data.data, 'fieldsMap': res.data.fieldsMap, 'notes':(res.data.notes===null) ? {} : res.data.notes, 'verifications': (res.data.verifications===null) ? {} : res.data.verifications, 'showEditProperty': true, propertyId: propertyId});
 			})
 			.catch((e) => {
 				//console.log('inside catch');
 				//console.log(e);
-				//console.log(e.response);
+				console.log(e.response);
 				if (e && e.response && !e.response.data.success && e.response.data.redirect) {
 					this.setState({redirectTo: '/'});
 				}
@@ -98,7 +113,7 @@ class UpdateProperty extends Component {
 			const keyNum = Object.keys(this.state.notes).length;
 			var obj = {};
 			var index = 1;
-			obj[index] = {note_id: this.props.match.params.id, created_on: now(), created_by: localStorage.getItem('email'), note_text:this.state.updatedData.Note.value};
+			obj[index] = {note_id: this.state.id, created_on: now(), created_by: localStorage.getItem('email'), note_text:this.state.updatedData.Note.value};
 			index ++;
 			if (keyNum > 0) {
 				var ct;
@@ -191,7 +206,7 @@ class UpdateProperty extends Component {
 	}
 
 	getPropertyId() {
-		return this.state.data.id;
+		return this.state.id;
 	}
 
 	getIsDuplicate() {
@@ -247,7 +262,7 @@ class UpdateProperty extends Component {
 			`/update_property?userEmail=${localStorage.getItem('email')}`,
 			{
 				updatedData: this.state.updatedData,
-				propertyId: this.props.match.params.id
+				propertyId: this.state.id
 			})
 			.then((res) => {
 				this.showSaveButton();
@@ -344,7 +359,7 @@ class UpdateProperty extends Component {
 						
 							<ContactInfo data={this.state.data} />
 							<br/>
-							<AssignedUserInfo propertyId={this.state.propertyId} />
+							<AssignedUserInfo propertyId={this.getPropertyId()} />
 						</Col>
 					</Row>
 					<hr />
@@ -408,4 +423,4 @@ class UpdateProperty extends Component {
 	}
 }
 
-export {UpdateProperty};
+export default withRouter(UpdateProperty);
